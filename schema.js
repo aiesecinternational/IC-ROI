@@ -75,17 +75,35 @@ const RootQuery = new GraphQLObjectType({
             const response = await axios.post(
                 "https://gis-api.aiesec.org/graphql",
                 {
-                    query: `
-                    {
-                      committee(id: ${args.id}) {
-                        name
+                  query: `
+                  {
+                    committee(id: ${args.id}) {
+                      name
+                      programme_fees(first: 29) {
+                        nodes {
+                          programme { short_name }
+                          fee
+                          contract
+                          created_at
+                          updated_at
+                          enabled
+                          fee_for
+                          mc_id
+                          lc_id
+                          programme_fee_max
+                          programme_fee_min
+                        }
+                        total_count
                       }
+                      project_fee_limit
+                      project_fee_limit_cents
                     }
-                    `
+                  }
+                  `                  
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${process.env.AIESEC_TOKEN}`,
+                        "Authorization": process.env.AIESEC_TOKEN,
                         "Content-Type": "application/json"
                     }
                 }
