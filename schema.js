@@ -1,75 +1,107 @@
-const { 
-  GraphQLObjectType, 
-  GraphQLSchema, 
-  GraphQLInt, 
-  GraphQLString, 
-  GraphQLList, 
-  GraphQLFloat, 
-  GraphQLBoolean 
+require("dotenv").config();
+console.log("AIESEC_TOKEN in server.js:", process.env.AIESEC_TOKEN); // Debugging
+const {
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLInt,
+  GraphQLString,
+  GraphQLList,
+  GraphQLFloat,
+  GraphQLBoolean
 } = require("graphql");
+const axios = require("axios");
 
-// Define MC Type
-const MCType = new GraphQLObjectType({
-  name: "MC",
+// Define Programme Type
+const ProgrammeType = new GraphQLObjectType({
+  name: "Programme",
   fields: {
-    id: { type: GraphQLInt },
+    short_name: { type: GraphQLString }
+  }
+});
+
+// Define Programme Fee Type
+const ProgrammeFeeType = new GraphQLObjectType({
+  name: "ProgrammeFee",
+  fields: {
+    programme: { type: ProgrammeType }, // Reference the separate ProgrammeType
+    fee: { type: GraphQLFloat },
+    contract: { type: GraphQLString },
+    created_at: { type: GraphQLString },
+    updated_at: { type: GraphQLString },
+    enabled: { type: GraphQLBoolean },
+    fee_for: { type: GraphQLString },
+    mc_id: { type: GraphQLInt },
+    lc_id: { type: GraphQLInt },
+    programme_fee_max: { type: GraphQLFloat },
+    programme_fee_min: { type: GraphQLFloat }
+  }
+});
+
+// Define Programme Fees Type (to include total_count)
+const ProgrammeFeesType = new GraphQLObjectType({
+  name: "ProgrammeFees",
+  fields: {
+    nodes: { type: new GraphQLList(ProgrammeFeeType) },
+    total_count: { type: GraphQLInt }
+  }
+});
+
+// Define Committee Type
+const CommitteeType = new GraphQLObjectType({
+  name: "Committee",
+  fields: {
     name: { type: GraphQLString },
-    delegateFee: { type: GraphQLFloat },
-    ticketFee: { type: GraphQLFloat },
-    isHost: { type: GraphQLBoolean }
+    programme_fees: { type: ProgrammeFeesType },
+    project_fee_limit: { type: GraphQLFloat },
+    project_fee_limit_cents: { type: GraphQLInt }
   }
 });
-
-// Define Calculation Response Type
-const CalculationType = new GraphQLObjectType({
-  name: "Calculation",
-  fields: {
-    totalCost: { type: GraphQLFloat }
-  }
-});
-
-// Sample Data (Replace with DB Queries)
-const MCs = [
-  { id: 1, name: "MC USA", delegateFee: 300, ticketFee: 1200, isHost: false },
-  { id: 2, name: "MC Canada", delegateFee: 280, ticketFee: 1000, isHost: false },
-  { id: 3, name: "MC Egypt", delegateFee: 200, ticketFee: 800, isHost: true }
-];
 
 // Define Root Query
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
-  fields: {
-    registeredMCs: {
-      type: new GraphQLList(MCType),
-      resolve() {
-        return MCs;
-      }
+  fields: () => ({  // ✅ Wrap fields in a function to avoid reference issues
+    test: {
+      type: GraphQLString,
+      resolve: () => "GraphQL is working!"
+    },
+    committee: {
+      type: CommitteeType,
+      args: { id: { type: GraphQLInt } },
+      resolve: async (_, args) => {
+        try {
+            console.log("Using AIESEC_TOKEN in API request:", process.env.AIESEC_TOKEN); // Debugging
+    
+            const response = await axios.post(
+                "https://gis-api.aiesec.org/graphql",
+                {
+                    query: `
+                    {
+                      committee(id: ${args.id}) {
+                        name
+                      }
+                    }
+                    `
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${process.env.AIESEC_TOKEN}`,
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+    
+            return response.data.data.committee;
+        } catch (error) {
+            console.error("Error fetching data:", error.response?.data || error.message);
+            throw new Error("Error fetching data: " + error.message);
+        }
+    }    
     }
-  }
+  })
 });
 
-// Define Mutations
-const Mutation = new GraphQLObjectType({
-  name: "Mutation",
-  fields: {
-    calculateData: {
-      type: CalculationType,
-      args: {
-        mc_id: { type: GraphQLInt }
-      },
-      resolve(_, args) {
-        const mc = MCs.find(mc => mc.id === args.mc_id);
-        if (!mc) throw new Error("MC not found");
-
-        // Calculation (Handled in frontend, but backend can still provide)
-        const totalCost = mc.delegateFee + mc.ticketFee;
-        return { totalCost };
-      }
-    }
-  }
-});
-
+// Export GraphQL Schema
 module.exports = new GraphQLSchema({
-  query: RootQuery,
-  mutation: Mutation
+  query: RootQuery
 });
