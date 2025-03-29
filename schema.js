@@ -1,5 +1,5 @@
 require("dotenv").config();
-console.log("AIESEC_TOKEN in server.js:", process.env.AIESEC_TOKEN); // Debugging
+const axios = require("axios");
 const {
   GraphQLObjectType,
   GraphQLSchema,
@@ -9,7 +9,36 @@ const {
   GraphQLFloat,
   GraphQLBoolean
 } = require("graphql");
-const axios = require("axios");
+
+// Store AIESEC token in memory
+let AIESEC_TOKEN = process.env.AIESEC_TOKEN;
+
+// Function to refresh the AIESEC token every hour
+/*const refreshAIESECToken = async () => {
+    try {
+        console.log("Refreshing AIESEC Token...");
+
+        const response = await axios.post("https://auth.aiesec.org/oauth/token", {
+            client_id: process.env.AIESEC_CLIENT_ID,
+            client_secret: process.env.AIESEC_CLIENT_SECRET,
+            grant_type: "client_credentials"
+        });
+
+        AIESEC_TOKEN = response.data.access_token;
+        console.log("New AIESEC Token:", AIESEC_TOKEN);
+    } catch (error) {
+        console.error("Failed to refresh AIESEC Token:", error.response?.data || error.message);
+    }
+};
+
+// Refresh the token every 1 hour (3600000 ms)
+setInterval(refreshAIESECToken, 3600000);
+
+// Refresh at startup
+refreshAIESECToken();
+
+// Function to get the latest token
+const getAIESECToken = () => AIESEC_TOKEN;*/
 
 // Define Programme Type
 const ProgrammeType = new GraphQLObjectType({
@@ -70,8 +99,7 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLInt } },
       resolve: async (_, args) => {
         try {
-            console.log("Using AIESEC_TOKEN in API request:", process.env.AIESEC_TOKEN); // Debugging
-    
+          //console.log("Using refreshed AIESEC_TOKEN in API request:", getAIESECToken());
             const response = await axios.post(
                 "https://gis-api.aiesec.org/graphql",
                 {
@@ -103,7 +131,7 @@ const RootQuery = new GraphQLObjectType({
                 },
                 {
                     headers: {
-                        "Authorization": process.env.AIESEC_TOKEN,
+                        "Authorization": AIESEC_TOKEN,
                         "Content-Type": "application/json"
                     }
                 }
