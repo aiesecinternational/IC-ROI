@@ -17,10 +17,8 @@ const products = [
   { id: 5, name: "Product 5" },]
 
 const App = () => {
-  const [entity,setEntity] = useState("");
-  const [product,setProduct] = useState("");
-  const [entityId , setEntityId] = useState(0);
-  const [productId, setProductId] = useState(0);
+  const [EntityId,setEntityId] = useState("");
+  const [productId,setProductId] = useState("");
   const [delegates,setDelegates] = useState(0);
   const [fullycovered,setFullycovered] = useState(null);
   const [showCalculations,setShowCalculations] = useState(false);
@@ -29,19 +27,25 @@ const App = () => {
   const FLIGHT_FEE = null;  // Hardcoded flight fee (USD) - can be null
 
   const handleEntityChange = (e) => {
-    const entityName = e.target.value;
-    setEntity(entityName);
-    setEntityId(entities[entityName]?.id || null);
+    const selectedEntity = entities.find(entity => entity.name === e.target.value);
+    if (selectedEntity) {
+      setEntityId(selectedEntity.id);  
+    } else {
+      setEntityId(0);  
+    }
   };
 
   const handleProductChange = (p) => {
-    const productName = p.target.value;
-    setProduct(productName);
-    setProductId(entities[productName]?.id || null);
+    const selectedProduct = products.find(prod => prod.name === p.target.value);
+    if (selectedProduct) {
+      setProductId(selectedProduct.id);  
+    } else {
+      setProductId(0);  
+    }
   };
 
   const handleCalculate = () => {
-    if(!entity || !product ||delegates===""||fullycovered==="null"){
+    if(!EntityId|| !productId ||delegates===""||fullycovered==="null"){
       alert("All fields required!");
       return;
     }
@@ -53,9 +57,9 @@ const App = () => {
       <div className="user-input">
         {/* Input entity using dropdown */}
         <label htmlFor="entity">Entity: 
-          <select value={entity} onChange={handleEntityChange}>
+        <select value={EntityId ? entities.find(e => e.id === EntityId)?.name || "" : ""} onChange={handleEntityChange}>
             <option value = "">Select Entity</option>
-            {Object.values(entities).map((entity) => (
+            {entities.map((entity)=> (
               <option key = {entity.id} value={entity.name}>
                 {entity.name}
               </option>
@@ -83,9 +87,9 @@ const App = () => {
 
         {/* Input product using dropdown */}
         <label htmlFor="product">Product:
-          <select value={product} onChange={handleProductChange}>
+        <select value={productId ? products.find(p => p.id === productId)?.name || "" : ""} onChange={handleProductChange}>
             <option value = "">Select Product</option>
-            {Object.values(products).map((product) => (
+            {products.map((product) => (
               <option key={product.id} value={product.name}>
                 {product.name}
               </option>
