@@ -1,5 +1,8 @@
 require("dotenv").config();
 const axios = require("axios");
+const fs = require("fs");
+const csv = require("csv-parser");
+const path = require("path");
 const {
   GraphQLObjectType,
   GraphQLSchema,
@@ -7,40 +10,24 @@ const {
   GraphQLString,
   GraphQLList,
   GraphQLFloat,
-  GraphQLBoolean
 } = require("graphql");
 
-// Store AIESEC token in memory
-let AIESEC_TOKEN = process.env.AIESEC_TOKEN;
+const DELEGATE_FEE = 610; // Constant delegate fee
 
-// Function to refresh the AIESEC token every hour
-/*const refreshAIESECToken = async () => {
-    try {
-        console.log("Refreshing AIESEC Token...");
-
-        const response = await axios.post("https://auth.aiesec.org/oauth/token", {
-            client_id: process.env.AIESEC_CLIENT_ID,
-            client_secret: process.env.AIESEC_CLIENT_SECRET,
-            grant_type: "client_credentials"
-        });
-
-        AIESEC_TOKEN = response.data.access_token;
-        console.log("New AIESEC Token:", AIESEC_TOKEN);
-    } catch (error) {
-        console.error("Failed to refresh AIESEC Token:", error.response?.data || error.message);
+const flightFees = {};
+fs.createReadStream(path.join(__dirname, "flight_fees.csv"))
+  .pipe(csv())
+  .on("data", (row) => {
+    console.log(row); // Debugging: Check what data is being read
+    if (row.Country && row.Price) { // Ensure correct column names
+      flightFees[row.Country] = parseFloat(row.Price) || null;
     }
-};
+  })
+  .on("end", () => {
+    console.log("✅ Flight Fees Loaded:", flightFees);
+  });
 
-// Refresh the token every 1 hour (3600000 ms)
-setInterval(refreshAIESECToken, 3600000);
-
-// Refresh at startup
-refreshAIESECToken();
-
-// Function to get the latest token
-const getAIESECToken = () => AIESEC_TOKEN;*/
-
-// Define Programme Type
+// Programme Type
 const ProgrammeType = new GraphQLObjectType({
   name: "Programme",
   fields: {
@@ -48,103 +35,76 @@ const ProgrammeType = new GraphQLObjectType({
   }
 });
 
-// Define Programme Fee Type
+// Programme Fee Type
 const ProgrammeFeeType = new GraphQLObjectType({
   name: "ProgrammeFee",
   fields: {
-    programme: { type: ProgrammeType }, // Reference the separate ProgrammeType
-    fee: { type: GraphQLFloat },
-    contract: { type: GraphQLString },
-    created_at: { type: GraphQLString },
-    updated_at: { type: GraphQLString },
-    enabled: { type: GraphQLBoolean },
-    fee_for: { type: GraphQLString },
-    mc_id: { type: GraphQLInt },
-    lc_id: { type: GraphQLInt },
-    programme_fee_max: { type: GraphQLFloat },
-    programme_fee_min: { type: GraphQLFloat }
+    programme: { type: ProgrammeType },
+    fee: { type: GraphQLFloat }
   }
 });
 
-// Define Programme Fees Type (to include total_count)
-const ProgrammeFeesType = new GraphQLObjectType({
-  name: "ProgrammeFees",
-  fields: {
-    nodes: { type: new GraphQLList(ProgrammeFeeType) },
-    total_count: { type: GraphQLInt }
-  }
-});
-
-// Define Committee Type
+// Committee Type
 const CommitteeType = new GraphQLObjectType({
   name: "Committee",
   fields: {
-    name: { type: GraphQLString },
-    programme_fees: { type: ProgrammeFeesType },
-    project_fee_limit: { type: GraphQLFloat },
-    project_fee_limit_cents: { type: GraphQLInt }
+    id: { type: GraphQLInt },
+    name: { type: GraphQLString }, // MC Name
+    delegate_fee: { type: GraphQLInt, resolve: () => DELEGATE_FEE }, // Constant 610
+    flight_fee: { 
+      type: GraphQLFloat, 
+      resolve: (parent) => flightFees[parent.id] || null // Get flight fee from CSV
+    },
+    programme_fees: { 
+      type: new GraphQLList(ProgrammeFeeType),
+      resolve: (parent) => parent.programme_fees.nodes || []
+    }
   }
 });
 
-// Define Root Query
+// Root Query
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
-  fields: () => ({  // ✅ Wrap fields in a function to avoid reference issues
-    test: {
-      type: GraphQLString,
-      resolve: () => "GraphQL is working!"
-    },
+  fields: {
     committee: {
       type: CommitteeType,
       args: { id: { type: GraphQLInt } },
       resolve: async (_, args) => {
         try {
-          //console.log("Using refreshed AIESEC_TOKEN in API request:", getAIESECToken());
-            const response = await axios.post(
-                "https://gis-api.aiesec.org/graphql",
-                {
-                  query: `
-                  {
-                    committee(id: ${args.id}) {
-                      name
-                      programme_fees(first: 29) {
-                        nodes {
-                          programme { short_name }
-                          fee
-                          contract
-                          created_at
-                          updated_at
-                          enabled
-                          fee_for
-                          mc_id
-                          lc_id
-                          programme_fee_max
-                          programme_fee_min
-                        }
-                        total_count
-                      }
-                      project_fee_limit
-                      project_fee_limit_cents
+          const response = await axios.post(
+            "https://gis-api.aiesec.org/graphql",
+            {
+              query: `
+              {
+                committee(id: ${args.id}) {
+                  id
+                  name
+                  programme_fees(first: 29) {
+                    nodes {
+                      programme { short_name }
+                      fee
                     }
                   }
-                  `                  
-                },
-                {
-                    headers: {
-                        "Authorization": AIESEC_TOKEN,
-                        "Content-Type": "application/json"
-                    }
                 }
-            );
-    
-            return response.data.data.committee;
+              }
+              `                  
+            },
+            {
+              headers: {
+                "Authorization": process.env.AIESEC_TOKEN,
+                "Content-Type": "application/json"
+              }
+            }
+          );
+
+          return response.data.data.committee;
         } catch (error) {
-            console.error("Error fetching data:", error.response?.data || error.message);
-            throw new Error("Error fetching data: " + error.message);
+          console.error("Error fetching data:", error.response?.data || error.message);
+          throw new Error("Error fetching data: " + error.message);
         }
-    }    
+      }
     }
-  })
+  }
 });
 
 // Export GraphQL Schema

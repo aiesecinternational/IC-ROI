@@ -1,0 +1,154 @@
+Country,Departure City,Destination City,Price (USD)
+United States,New York,Colombo,850
+United Kingdom,London,Colombo,715
+Canada,Toronto,Colombo,890
+Australia,Sydney,Colombo,420
+India,New Delhi,Colombo,140
+China,Beijing,Colombo,600
+France,Paris,Colombo,750
+Germany,Frankfurt,Colombo,730
+Italy,Rome,Colombo,780
+Japan,Tokyo,Colombo,880
+Brazil,São Paulo,Colombo,910
+Russia,Moscow,Colombo,820
+South Africa,Johannesburg,Colombo,950
+Saudi Arabia,Riyadh,Colombo,300
+UAE,Dubai,Colombo,190
+Turkey,Istanbul,Colombo,605
+Argentina,Buenos Aires,Colombo,970
+Mexico,Mexico City,Colombo,920
+South Korea,Seoul,Colombo,770
+Thailand,Bangkok,Colombo,200
+Indonesia,Jakarta,Colombo,260
+Egypt,Cairo,Colombo,720
+Spain,Madrid,Colombo,740
+Netherlands,Amsterdam,Colombo,740
+Malaysia,Kuala Lumpur,Colombo,180
+Pakistan,Karachi,Colombo,310
+Bangladesh,Dhaka,Colombo,220
+Philippines,Manila,Colombo,330
+Vietnam,Hanoi,Colombo,290
+Greece,Athens,Colombo,760
+Sweden,Stockholm,Colombo,790
+Switzerland,Zurich,Colombo,810
+Portugal,Lisbon,Colombo,780
+New Zealand,Auckland,Colombo,480
+Colombia,Bogotá,Colombo,950
+Nigeria,Lagos,Colombo,920
+Kenya,Nairobi,Colombo,890
+Morocco,Casablanca,Colombo,860
+Peru,Lima,Colombo,970
+Chile,Santiago,Colombo,990
+Israel,Tel Aviv,Colombo,620
+Poland,Warsaw,Colombo,700
+Ukraine,Kyiv,Colombo,710
+Czech Republic,Prague,Colombo,720
+Norway,Oslo,Colombo,780
+Finland,Helsinki,Colombo,790
+Denmark,Copenhagen,Colombo,750
+Afghanistan,Kabul,Colombo,400
+Albania,Tirana,Colombo,750
+Algeria,Algiers,Colombo,810
+Andorra,Andorra la Vella,Colombo,790
+Angola,Luanda,Colombo,870
+Antigua and Barbuda,St. John's,Colombo,1020
+Armenia,Yerevan,Colombo,680
+Austria,Vienna,Colombo,770
+Azerbaijan,Baku,Colombo,620
+Bahamas,Nassau,Colombo,1050
+Bahrain,Manama,Colombo,250
+Barbados,Bridgetown,Colombo,1100
+Belarus,Minsk,Colombo,710
+Belgium,Brussels,Colombo,730
+Belize,Belmopan,Colombo,980
+Benin,Porto-Novo,Colombo,890
+Bhutan,Thimphu,Colombo,320
+Bolivia,La Paz,Colombo,960
+Bosnia and Herzegovina,Sarajevo,Colombo,750
+Botswana,Gaborone,Colombo,940
+Brunei,Bandar Seri Begawan,Colombo,310
+Burkina Faso,Ouagadougou,Colombo,880
+Burundi,Gitega,Colombo,910
+Cabo Verde,Praia,Colombo,970
+Cambodia,Phnom Penh,Colombo,260
+Cameroon,Yaoundé,Colombo,920
+Central African Republic,Bangui,Colombo,930
+Chad,N'Djamena,Colombo,950
+Comoros,Moroni,Colombo,980
+Congo (Congo-Brazzaville),Brazzaville,Colombo,900
+Costa Rica,San José,Colombo,1020
+Côte d'Ivoire,Yamoussoukro,Colombo,880
+Croatia,Zagreb,Colombo,740
+Cuba,Havana,Colombo,1010
+Cyprus,Nicosia,Colombo,720
+Djibouti,Djibouti,Colombo,930
+Dominica,Roseau,Colombo,1080
+Dominican Republic,Santo Domingo,Colombo,1030
+Ecuador,Quito,Colombo,980
+El Salvador,San Salvador,Colombo,1040
+Equatorial Guinea,Malabo,Colombo,910
+Eritrea,Asmara,Colombo,930
+Eswatini,Mbabane,Colombo,920
+Ethiopia,Addis Ababa,Colombo,870
+Fiji,Suva,Colombo,500
+Gabon,Libreville,Colombo,890
+Gambia,Banjul,Colombo,910
+Georgia,Tbilisi,Colombo,700
+Grenada,St. George's,Colombo,1090
+Guatemala,Guatemala City,Colombo,1030
+Guinea,Conakry,Colombo,900
+Guinea-Bissau,Bissau,Colombo,950
+Guyana,Georgetown,Colombo,1010
+Haiti,Port-au-Prince,Colombo,1040
+Honduras,Tegucigalpa,Colombo,1030
+Iceland,Reykjavik,Colombo,800
+Iran,Tehran,Colombo,450
+Iraq,Baghdad,Colombo,420
+Ireland,Dublin,Colombo,720
+Jamaica,Kingston,Colombo,1060
+Jordan,Amman,Colombo,390
+Kazakhstan,Nur-Sultan,Colombo,680
+Kuwait,Kuwait City,Colombo,270
+Kyrgyzstan,Bishkek,Colombo,600
+Laos,Vientiane,Colombo,280
+Lebanon,Beirut,Colombo,410
+Lesotho,Maseru,Colombo,950
+Liberia,Monrovia,Colombo,930
+Libya,Tripoli,Colombo,870
+Liechtenstein,Vaduz,Colombo,770
+Luxembourg,Luxembourg City,Colombo,750
+Madagascar,Antananarivo,Colombo,820
+Malawi,Lilongwe,Colombo,920
+Maldives,Malé,Colombo,180
+Mali,Bamako,Colombo,880
+Malta,Valletta,Colombo,720
+Mauritania,Nouakchott,Colombo,890
+Mauritius,Port Louis,Colombo,200
+Moldova,Chișinău,Colombo,700
+Mongolia,Ulaanbaatar,Colombo,720
+Montenegro,Podgorica,Colombo,740
+Myanmar,Naypyidaw,Colombo,240
+Namibia,Windhoek,Colombo,960
+Nauru,Yaren,Colombo,510
+Nepal,Kathmandu,Colombo,300
+North Macedonia,Skopje,Colombo,750
+Oman,Muscat,Colombo,280
+Palau,Ngerulmud,Colombo,520
+Palestine,Ramallah,Colombo,420
+Panama,Panama City,Colombo,1020
+Papua New Guinea,Port Moresby,Colombo,530
+Paraguay,Asunción,Colombo,970
+Qatar,Doha,Colombo,240
+Romania,Bucharest,Colombo,710
+San Marino,San Marino,Colombo,790
+Serbia,Belgrade,Colombo,740
+Seychelles,Victoria,Colombo,210
+Singapore,Singapore,Colombo,190
+Slovakia,Bratislava,Colombo,720
+Slovenia,Ljubljana,Colombo,740
+Sudan,Khartoum,Colombo,850
+Suriname,Paramaribo,Colombo,1010
+Syria,Damascus,Colombo,400
+Tanzania,Dodoma,Colombo,890
+Togo,Lomé,Colombo,920
+Tunisia,Tunis,Colombo,830
