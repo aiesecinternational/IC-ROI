@@ -1,4 +1,4 @@
-ID,Country,Departure City,Destination City,Price,iGV Fee,0GV Fee,iGTa Fee,0GTa Fee,iGTe Fee,0GTe Fee
+ID,Country,Departure City,Destination City,Price,iGV Fee,OGV Fee,iGTa Fee,OGTa Fee,iGTe Fee,OGTe Fee
 30,Barbados,Bridgetown,Colombo,1100,50,60,70,80,90,100
 79,Belarus,Minsk,Colombo,710,50,60,70,80,90,100
 133,Albania,Tirana,Colombo,750,50,60,70,80,90,100

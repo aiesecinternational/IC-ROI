@@ -8,7 +8,6 @@ const {
   GraphQLSchema,
   GraphQLInt,
   GraphQLString,
-  GraphQLList,
   GraphQLFloat,
 } = require("graphql");
 
@@ -16,35 +15,27 @@ let AIESEC_TOKEN = process.env.AIESEC_TOKEN;
 
 const DELEGATE_FEE = 610; // Constant delegate fee
 
-const flightFees = {};
-fs.createReadStream(path.join(__dirname, "flight_fees.csv"))
+const feesData = {}; // Object to store all fee details
+
+fs.createReadStream(path.join(__dirname, "fees.csv"))
   .pipe(csv())
   .on("data", (row) => {
-    console.log(row); // Debugging: Check what data is being read
-    if (row.ID && row.Price) { // Ensure correct column names
-      flightFees[row.ID] = parseFloat(row.Price) || null; // Use ID instead of Country
+    if (row.ID) {
+      const id = parseInt(row.ID, 10);
+      feesData[id] = {
+        flight_fee: parseFloat(row.Price) || null,
+        iGV_Fee: parseFloat(row["iGV Fee"]) || null,
+        oGV_Fee: parseFloat(row["OGV Fee"]) || null,
+        iGTa_Fee: parseFloat(row["iGTa Fee"]) || null,
+        oGTa_Fee: parseFloat(row["OGTa Fee"]) || null,
+        iGTe_Fee: parseFloat(row["iGTe Fee"]) || null,
+        oGTe_Fee: parseFloat(row["OGTe Fee"]) || null,
+      };
     }
   })
   .on("end", () => {
-    console.log("✅ Flight Fees Loaded:", flightFees);
+    console.log("✅ Fees Data Loaded:", feesData);
   });
-
-// Programme Type
-const ProgrammeType = new GraphQLObjectType({
-  name: "Programme",
-  fields: {
-    short_name: { type: GraphQLString }
-  }
-});
-
-// Programme Fee Type
-const ProgrammeFeeType = new GraphQLObjectType({
-  name: "ProgrammeFee",
-  fields: {
-    programme: { type: ProgrammeType },
-    fee: { type: GraphQLFloat }
-  }
-});
 
 // Committee Type
 const CommitteeType = new GraphQLObjectType({
@@ -52,15 +43,14 @@ const CommitteeType = new GraphQLObjectType({
   fields: {
     id: { type: GraphQLInt },
     name: { type: GraphQLString }, // MC Name
-    delegate_fee: { type: GraphQLInt, resolve: () => DELEGATE_FEE }, // Constant 610
-    flight_fee: { 
-      type: GraphQLFloat, 
-      resolve: (parent) => flightFees[parent.id] || null // Now uses ID correctly
-    },
-    programme_fees: { 
-      type: new GraphQLList(ProgrammeFeeType),
-      resolve: (parent) => parent.programme_fees.nodes || []
-    }
+    delegate_fee: { type: GraphQLInt, resolve: () => DELEGATE_FEE },
+    flight_fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.flight_fee || null },
+    iGV_Fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.iGV_Fee || null },
+    oGV_Fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.oGV_Fee || null },
+    iGTa_Fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.iGTa_Fee || null },
+    oGTa_Fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.oGTa_Fee || null },
+    iGTe_Fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.iGTe_Fee || null },
+    oGTe_Fee: { type: GraphQLFloat, resolve: (parent) => feesData[parent.id]?.oGTe_Fee || null },
   }
 });
 
@@ -76,20 +66,12 @@ const RootQuery = new GraphQLObjectType({
           const response = await axios.post(
             "https://gis-api.aiesec.org/graphql",
             {
-              query: `
-              {
+              query: `{
                 committee(id: ${args.id}) {
                   id
                   name
-                  programme_fees(first: 29) {
-                    nodes {
-                      programme { short_name }
-                      fee
-                    }
-                  }
                 }
-              }
-              `                  
+              }`
             },
             {
               headers: {
