@@ -21,8 +21,8 @@ fs.createReadStream(path.join(__dirname, "flight_fees.csv"))
   .pipe(csv())
   .on("data", (row) => {
     console.log(row); // Debugging: Check what data is being read
-    if (row.Country && row.Price) { // Ensure correct column names
-      flightFees[row.Country] = parseFloat(row.Price) || null;
+    if (row.ID && row.Price) { // Ensure correct column names
+      flightFees[row.ID] = parseFloat(row.Price) || null; // Use ID instead of Country
     }
   })
   .on("end", () => {
@@ -55,7 +55,7 @@ const CommitteeType = new GraphQLObjectType({
     delegate_fee: { type: GraphQLInt, resolve: () => DELEGATE_FEE }, // Constant 610
     flight_fee: { 
       type: GraphQLFloat, 
-      resolve: (parent) => flightFees[parent.id] || null // Get flight fee from CSV
+      resolve: (parent) => flightFees[parent.id] || null // Now uses ID correctly
     },
     programme_fees: { 
       type: new GraphQLList(ProgrammeFeeType),
