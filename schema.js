@@ -12,6 +12,8 @@ const {
   GraphQLFloat,
 } = require("graphql");
 
+let AIESEC_TOKEN = process.env.AIESEC_TOKEN;
+
 const DELEGATE_FEE = 610; // Constant delegate fee
 
 const flightFees = {};
@@ -91,7 +93,7 @@ const RootQuery = new GraphQLObjectType({
             },
             {
               headers: {
-                "Authorization": process.env.AIESEC_TOKEN,
+                "Authorization": AIESEC_TOKEN,
                 "Content-Type": "application/json"
               }
             }
