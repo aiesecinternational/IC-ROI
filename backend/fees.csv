@@ -1,0 +1,145 @@
+ID,Country,Departure City,Destination City,Price,iGV Fee,OGV Fee,iGTa Fee,OGTa Fee,iGTe Fee,OGTe Fee
+4,Myanmar,Naypyidaw,Colombo,335,50,60,70,80,90,100
+29,Cabo Verde,Praia,Colombo,126,50,60,70,80,90,100
+30,Barbados,Bridgetown,Colombo,737,50,60,70,80,90,100
+55,Laos,Vientiane,Colombo,444,50,60,70,80,90,100
+56,Kuwait,Kuwait City,Colombo,515,50,60,70,80,90,100
+57,Montenegro,Podgorica,Colombo,809,50,60,70,80,90,100
+78,Namibia,Windhoek,Colombo,321,50,60,70,80,90,100
+79,Belarus,Minsk,Colombo,124,50,60,70,80,90,100
+112,Nepal,Kathmandu,Colombo,317,50,60,70,80,90,100
+133,Albania,Tirana,Colombo,443,50,60,70,80,90,100
+177,Paraguay,Asuncion,Colombo,693,50,60,70,80,90,100
+178,Nicaragua,Managua,Colombo,479,50,60,70,80,90,100
+180,Burkina Faso,Ouagadougou,Colombo,671,50,60,70,80,90,100
+182,Lebanon,Beirut,Colombo,480,50,60,70,80,90,100
+219,Liberia,Monrovia,Colombo,182,50,60,70,80,90,100
+305,Cambodia,Phnom Penh,Colombo,740,50,60,70,80,90,100
+409,Mongolia,Ulaanbaatar,Colombo,491,50,60,70,80,90,100
+457,Algeria,Algiers,Colombo,523,50,60,70,80,90,100
+459,Benin,Porto-Novo,Colombo,298,50,60,70,80,90,100
+476,Ethiopia,Addis Ababa,Colombo,707,50,60,70,80,90,100
+477,Sultanate of Oman,Muscat,Colombo,174,50,60,70,80,90,100
+489,Mauritius,Port Louis,Colombo,728,50,60,70,80,90,100
+494,Kazakhstan,Astana,Colombo,577,50,60,70,80,90,100
+495,Iran,Tehran,Colombo,451,50,60,70,80,90,100
+499,Gabon,Libreville,Colombo,866,50,60,70,80,90,100
+504,Vietnam,Hanoi,Colombo,327,50,60,70,80,90,100
+506,Rwanda,Kigali,Colombo,152,50,60,70,80,90,100
+518,Bahrain,Manama,Colombo,362,50,60,70,80,90,100
+529,Qatar,Doha,Colombo,340,50,60,70,80,90,100
+530,Jordan,Amman,Colombo,749,50,60,70,80,90,100
+531,Georgia,Tbilisi,Colombo,333,50,60,70,80,90,100
+536,Moldova,Chi?in?u,Colombo,453,50,60,70,80,90,100
+537,Tajikistan,Dushanbe,Colombo,737,50,60,70,80,90,100
+539,Azerbaijan,Baku,Colombo,133,50,60,70,80,90,100
+543,Kyrgyzstan,Bishkek,Colombo,143,50,60,70,80,90,100
+567,Tanzania,Dodoma,Colombo,630,50,60,70,80,90,100
+572,Afghanistan,Kabul,Colombo,357,50,60,70,80,90,100
+577,Costa Rica,San José,Colombo,235,50,60,70,80,90,100
+1535,Argentina,Buenos Aires,Colombo,795,50,60,70,80,90,100
+1536,Slovakia,Bratislava,Colombo,780,50,60,70,80,90,100
+1537,Cote d'Ivoire,Yamoussoukro,Colombo,267,50,60,70,80,90,100
+1538,Puerto Rico,San Juan,Colombo,585,50,60,70,80,90,100
+1539,Indonesia,Jakarta,Colombo,263,50,60,70,80,90,100
+1540,Ireland,Dublin,Colombo,565,50,60,70,80,90,100
+1541,Armenia,Yerevan,Colombo,526,50,60,70,80,90,100
+1542,Italy,Rome,Colombo,774,50,60,70,80,90,100
+1543,Togo,Lomo,Colombo,595,50,60,70,80,90,100
+1544,Portugal,Lisbon,Colombo,886,50,60,70,80,90,100
+1545,South Africa,Pretoria,Colombo,254,50,60,70,80,90,100
+1547,Serbia,Belgrade,Colombo,634,50,60,70,80,90,100
+1548,North Macedonia,Skopje,Colombo,571,50,60,70,80,90,100
+1549,Hungary,Budapest,Colombo,274,50,60,70,80,90,100
+1550,Iceland,Reykjavik,Colombo,695,50,60,70,80,90,100
+1551,Colombia,Bogotà,Colombo,420,50,60,70,80,90,100
+1552,Morocco,Rabat,Colombo,119,50,60,70,80,90,100
+1553,Peru,Lima,Colombo,858,50,60,70,80,90,100
+1554,Canada,Ottawa,Colombo,394,50,60,70,80,90,100
+1555,Greece,Athens,Colombo,565,50,60,70,80,90,100
+1556,Guatemala,Guatemala City,Colombo,778,50,60,70,80,90,100
+1557,Venezuela,Caracas,Colombo,189,50,60,70,80,90,100
+1558,Switzerland,Bern,Colombo,767,50,60,70,80,90,100
+1559,Tunisia,Tunis,Colombo,254,50,60,70,80,90,100
+1560,Romania,Bucharest,Colombo,343,50,60,70,80,90,100
+1561,Taiwan,Taipei,Colombo,148,50,60,70,80,90,100
+1562,South Korea,Seoul,Colombo,617,50,60,70,80,90,100
+1563,United Kingdom,London,Colombo,163,50,60,70,80,90,100
+1564,Poland,Warsaw,Colombo,531,50,60,70,80,90,100
+1565,Estonia,Tallinn,Colombo,142,50,60,70,80,90,100
+1566,Chile,Santiago,Colombo,673,50,60,70,80,90,100
+1567,Ecuador,Quito,Colombo,675,50,60,70,80,90,100
+1568,Ghana,Accra,Colombo,618,50,60,70,80,90,100
+1570,Czech Republic,Prague,Colombo,426,50,60,70,80,90,100
+1572,El Salvador,San Salvador,Colombo,853,50,60,70,80,90,100
+1573,Norway,Oslo,Colombo,417,50,60,70,80,90,100
+1574,Mozambique,Maputo,Colombo,609,50,60,70,80,90,100
+1575,Singapore,Singapore,Colombo,856,50,60,70,80,90,100
+1577,Denmark,Copenhagen,Colombo,711,50,60,70,80,90,100
+1578,Nigeria,Abuja,Colombo,593,50,60,70,80,90,100
+1579,Latvia,Riga,Colombo,918,50,60,70,80,90,100
+1580,Lithuania,Vilnius,Colombo,611,50,60,70,80,90,100
+1581,Cameroon,Yaoundé,Colombo,208,50,60,70,80,90,100
+1582,Panama,Panama City,Colombo,721,50,60,70,80,90,100
+1584,Botswana,Gaborone,Colombo,413,50,60,70,80,90,100
+1585,India,New Delhi,Colombo,208,50,60,70,80,90,100
+1587,Slovenia,Ljubljana,Colombo,548,50,60,70,80,90,100
+1588,Bulgaria,Sofia,Colombo,507,50,60,70,80,90,100
+1589,Mexico,Mexico City,Colombo,320,50,60,70,80,90,100
+1590,Bosnia and Herzegovina,Sarajevo,Colombo,894,50,60,70,80,90,100
+1591,Australia,Canberra,Colombo,275,50,60,70,80,90,100
+1592,Austria,Vienna,Colombo,477,50,60,70,80,90,100
+1593,Bolivia,Sucre,Colombo,753,50,60,70,80,90,100
+1594,Hong Kong,Hong Kong,Colombo,321,50,60,70,80,90,100
+1595,Croatia,Zagreb,Colombo,989,50,60,70,80,90,100
+1596,Germany,Berlin,Colombo,587,50,60,70,80,90,100
+1597,France,Paris,Colombo,542,50,60,70,80,90,100
+1598,Netherlands,Amsterdam,Colombo,721,50,60,70,80,90,100
+1599,Dominican Republic,Santo Domingo,Colombo,359,50,60,70,80,90,100
+1601,Sweden,Stockholm,Colombo,298,50,60,70,80,90,100
+1602,Uganda,Kampala,Colombo,276,50,60,70,80,90,100
+1603,Pakistan,Islamabad,Colombo,966,50,60,70,80,90,100
+1604,Philippines,Manila,Colombo,685,50,60,70,80,90,100
+1605,Senegal,Dakar,Colombo,939,50,60,70,80,90,100
+1606,Brazil,Brasilia,Colombo,261,50,60,70,80,90,100
+1607,Thailand,Bangkok,Colombo,742,50,60,70,80,90,100
+1609,Egypt,Cairo,Colombo,827,50,60,70,80,90,100
+1610,Ukraine,Kyiv,Colombo,241,50,60,70,80,90,100
+1611,Malaysia,Kuala Lumpur,Colombo,291,50,60,70,80,90,100
+1612,Malta,Valletta,Colombo,299,50,60,70,80,90,100
+1613,Mainland China,Beijing,Colombo,925,50,60,70,80,90,100
+1614,Uruguay,Montevideo,Colombo,554,50,60,70,80,90,100
+1615,Japan,Tokyo,Colombo,765,50,60,70,80,90,100
+1616,New Zealand,Wellington,Colombo,632,50,60,70,80,90,100
+1617,Kenya,Nairobi,Colombo,636,50,60,70,80,90,100
+1618,Russia,Moscow,Colombo,775,50,60,70,80,90,100
+1619,Spain,Madrid,Colombo,759,50,60,70,80,90,100
+1620,Finland,Helsinki,Colombo,584,50,60,70,80,90,100
+1621,United States,"Washington, D.C.",Colombo,451,50,60,70,80,90,100
+1622,Turkey,Ankara,Colombo,237,50,60,70,80,90,100
+1623,Sri Lanka,Sri Jayawardenepura Kotte,Colombo,0,50,60,70,80,90,100
+1624,Belgium,Brussels,Colombo,605,50,60,70,80,90,100
+1625,United Arab Emirates,Abu Dhabi,Colombo,529,50,60,70,80,90,100
+1709,Malawi,Lilongwe,Colombo,587,50,60,70,80,90,100
+1840,Seychelles,Victoria,Colombo,662,50,60,70,80,90,100
+2010,Bangladesh,Dhaka,Colombo,251,50,60,70,80,90,100
+2103,Monaco,Monaco,Colombo,906,50,60,70,80,90,100
+2104,Bhutan,Thimphu,Colombo,678,50,60,70,80,90,100
+2105,Maldives,Malé,Colombo,976,50,60,70,80,90,100
+2106,Saudi Arabia,Riyadh,Colombo,564,50,60,70,80,90,100
+2107,Honduras,Tegucigalpa,Colombo,370,50,60,70,80,90,100
+2108,Cyprus,Nicosia,Colombo,428,50,60,70,80,90,100
+2109,Uzbekistan,Tashkent,Colombo,831,50,60,70,80,90,100
+2115,Niger,Niamey,Colombo,911,50,60,70,80,90,100
+2117,Liechtenstein,Vaduz,Colombo,296,50,60,70,80,90,100
+2121,Zambia,Lusaka,Colombo,765,50,60,70,80,90,100
+2122,Fiji,Suva,Colombo,392,50,60,70,80,90,100
+2240,Andorra,Andorra la Vella,Colombo,538,50,60,70,80,90,100
+2249,Haiti,Port-au-Prince,Colombo,567,50,60,70,80,90,100
+2339,Zimbabwe,Harare,Colombo,563,50,60,70,80,90,100
+2417,Eswatini,Mbabane,Colombo,931,50,60,70,80,90,100
+2418,Sierra Leone,Freetown,Colombo,674,50,60,70,80,90,100
+2420,Jamaica,Kingston,Colombo,973,50,60,70,80,90,100
+2427,Madagascar,Antananarivo,Colombo,658,50,60,70,80,90,100
+2428,Mali,Bamako,Colombo,539,50,60,70,80,90,100
+2442,Mali,Mali City,Colombo,324,50,60,70,80,90,100
