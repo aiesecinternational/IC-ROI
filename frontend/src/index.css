@@ -1,0 +1,46 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  height: 100vh; 
+  background-color: #f4f4f4; 
+  font-family: Arial, sans-serif;
+}
+
+.user-input  {
+  display: flex;
+  flex-direction: column; /* Stack dropdowns vertically */
+  gap: 15px; /* Space between elements */
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  align-self: flex-start; /* Align to the left side */
+  margin-left: 300px; /* Move the input form slightly to the right */
+}
+
+
+.calculations  {
+  flex-direction: row; 
+  gap: 15 px; 
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  align-self:flex-end; 
+  margin-right: 100px; 
+}
+
+.container {
+  display: flex; /* Ensure horizontal alignment */
+  flex-direction: row; /* Align items in a row */
+  justify-content: space-between; /* Space out the sections */
+  align-items: flex-start; /* Align items at the top */
+  gap: 20px;
+  padding: 20px;
+  max-width: 900px; /* Keep a neat width */
+  margin: auto; /* Center the container */
+}
+
+
