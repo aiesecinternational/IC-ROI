@@ -6,14 +6,16 @@ import Footer from './components/footer';
 
 import IC_Visual  from './assets/IC_Visual.png';
 import Inside from './assets/Frame 366.png';
+import { roiCalculator } from './logic/roiCalculator';
 //import { useEffect } from 'react';
 
 const products = [
   { id: 1, name: "iGV" },
-  { id: 2, name: "iGT" },
+  { id: 2, name: "iGTe" },
   { id: 3, name: "oGV" },
-  { id: 4, name: "oGTa" },
-  { id: 5, name: "oGTe" },]
+  { id: 4, name: "iGTa" },
+  { id: 5, name: "oGTa" },
+  { id: 6, name: "oGTe" },]
 
 const App = () => {
   const [EntityId,setEntityId] = useState("");
@@ -22,8 +24,11 @@ const App = () => {
   const [fullycovered,setFullycovered] = useState(null);
   const [showCalculations,setShowCalculations] = useState(false);
 
-  const DELEGATE_FEE = 500; // Hardcoded delegate fee (USD)
-  const FLIGHT_FEE = null;  // Hardcoded flight fee (USD) - can be null
+  // const DELEGATE_FEE = 500; // Hardcoded delegate fee (USD)
+  const [ICDelegateFee, setICDelegateFee] = useState(500); // State for delegate fee
+  const [ICFlightFee, setICFlightFee] = useState(0); // State for flight fee
+  const [ICtotalCost, setICTotalCost] = useState(0); // State for total cost
+  const [requiedProductCount, setRequiedProductCount] = useState(0) // State for required product count
 
   const handleEntityChange = (e) => {
     const selectedEntity = entities.find(entity => entity.name === e.target.value);
@@ -43,11 +48,19 @@ const App = () => {
     }
   };
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if(!EntityId|| !productId ||delegates===""||fullycovered==="null"){
       alert("All fields required!");
       return;
     }
+
+    // Call the calculateROI function with the selected values
+    const { delegateFee, flightFee, totalCost, productCount} = await roiCalculator(EntityId, delegates, productId, fullycovered);
+    setICDelegateFee(delegateFee);
+    setICFlightFee(flightFee);
+    setICTotalCost(totalCost);
+    setRequiedProductCount(productCount);
+    
     setShowCalculations(true);
   };
 
@@ -199,11 +212,10 @@ const App = () => {
       {showCalculations && (
         <div className="calculations">
           <h3>Calculation Summary</h3>
-          <p>Delegate Fee: ${DELEGATE_FEE}</p>
-          <p>Flight Fee: {FLIGHT_FEE !== null ? `$${FLIGHT_FEE}` : "N/A"}</p>
-          <p>Total Cost: ${DELEGATE_FEE + (FLIGHT_FEE || 0)}</p>
-          <p>Product 1 Count: 10</p>
-          <p>Product 2 Count: 10</p>
+          <p>Delegate Fee: ${ICDelegateFee}</p>
+          <p>Flight Fee: {ICFlightFee !== null ? `$${ICFlightFee}` : "N/A"}</p>
+          <p>Total Cost: ${ICtotalCost}</p>
+          <p>Required {products[productId - 1].name} approvals Count: {requiedProductCount}</p>
         </div>
       )}
 
