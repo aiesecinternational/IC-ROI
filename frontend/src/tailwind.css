@@ -11,11 +11,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&display=swap');
 
 body {
+  font-family: 'Figtree', sans-serif;
   font-family: 'Inter', sans-serif;
 }
+
 
 :root {
   --variable-collection-black: rgba(82, 86, 94, 1);

@@ -3,9 +3,20 @@
   flex-direction: column;
   justify-content: center; 
   align-items: center;
-  height: 100vh; 
+  min-height: 100vh; 
   background-color: #f4f4f4; 
   font-family: Arial, sans-serif;
+
+
+  background: 
+    linear-gradient(rgba(244, 244, 244, 0.7), rgba(244, 244, 244, 0.7)), /* Optional tint */
+    url('./assets/bg.png') center/cover no-repeat fixed;
+  /* Alternative syntax if needed: */
+  background-image: url('./assets/bg.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat;
+  background-attachment: fixed; /* Optional - removes scrolling effect */
 }
 
 .user-input  {
@@ -43,4 +54,8 @@
   margin: auto; /* Center the container */
 }
 
-
+footer {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
