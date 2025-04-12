@@ -11,7 +11,6 @@ import Calculations from './components/Calculations';
 import IC_Visual  from './assets/IC_Visual.png';
 import Inside from './assets/Frame 366.png';
 
-//import { useEffect } from 'react';
 
 const products = [
   { id: 1, name: "iGV" },
@@ -23,7 +22,6 @@ const products = [
 
 const App = () => {
   const [EntityId,setEntityId] = useState("");
-  const [productId,setProductId] = useState("");
   const [delegates,setDelegates] = useState(0);
   const [fullycovered,setFullycovered] = useState(null);
   const [showCalculations,setShowCalculations] = useState(false);
