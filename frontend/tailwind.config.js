@@ -14,6 +14,7 @@ module.exports = {
       fontFamily:{
         kalam: ['Kalam', 'cursive'],
         inter: ['Inter', 'sans-serif'],
+        figtree: ['Figtree', 'sans-serif'],
       }
     },
   },
