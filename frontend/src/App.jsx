@@ -31,8 +31,9 @@ const App = () => {
   // const DELEGATE_FEE = 500; // Hardcoded delegate fee (USD)
   const [ICDelegateFee, setICDelegateFee] = useState(500); // State for delegate fee
   const [ICFlightFee, setICFlightFee] = useState(0); // State for flight fee
+  const [ICtotalCostPP, setICTotalCostPP] = useState(0); // State for total cost per person
   const [ICtotalCost, setICTotalCost] = useState(0); // State for total cost
-  const [requiedProductCount, setRequiedProductCount] = useState(0) // State for required product count
+  const [requiedProductCounts, setRequiedProductCounts] = useState([]) // State for required product count
 
   const handleEntityChange = (e) => {
     const selectedEntity = entities.find(entity => entity.name === e.target.value);
@@ -43,19 +44,21 @@ const App = () => {
     }
   };
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     if (!EntityId || !selectedProducts.length || delegates === 0 || fullycovered === null) {
       alert("All fields required!");
       return;
     }
 
+    console.log(selectedProducts);
+
     // Call the calculateROI function with the selected values
-    const { delegateFee, flightFee, totalCost, productCount} = await roiCalculator(EntityId, delegates, productId, fullycovered);
+    const { delegateFee, flightFee, totalCostpp, totalCost, productCounts} = await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
     setICDelegateFee(delegateFee);
     setICFlightFee(flightFee);
+    setICTotalCostPP(totalCostpp);
     setICTotalCost(totalCost);
-    setRequiedProductCount(productCount);
-    
+    setRequiedProductCounts(productCounts);
     setShowCalculations(true);
   };
 
@@ -180,7 +183,7 @@ const App = () => {
               </div>
 
               {/* Registered Entities Section - Added below main content */}
-              {showCalculations && <Calculations selectedProducts={selectedProducts} />}
+              {showCalculations && <Calculations calculations={{ ICDelegateFee, ICFlightFee, ICtotalCostPP, ICtotalCost, requiedProductCounts, delegates }} />}
               <div className="mt-8 text-center">
                 <h2 className="text-2xl font-bold font-figtree text-gray-800 mb-2">
                   GET YOUR IR GAME STARTED
