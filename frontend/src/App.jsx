@@ -67,7 +67,7 @@ const App = () => {
                   {/* Left: Form Section */}
                   <div className="user-input bg-white p-8 rounded-xl shadow-lg lg:w-1/2 mx-10 min-h-[500px]">
                     <h2 className="text-3xl font-extrabold mb-8 text-gray-800 font-kalam">
-                      IC CALCULATOR
+                      IC ROI CALCULATOR
                     </h2>
                     <div className="grid grid-cols-2 gap-4">
                       {/* Left Column: Entity and Delegate Fee Coverage */}
