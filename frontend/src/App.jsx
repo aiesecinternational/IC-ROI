@@ -1,6 +1,6 @@
 import "./index.css";
 import "./tailwind.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
@@ -15,7 +15,6 @@ import roiCalculator from "./logic/roiCalculator.js";
 import IC_Visual from "./assets/IC_Visual.png";
 import Inside from "./assets/Frame 366.png";
 import FooterImage from "./assets/Footer_image.png";
-//import { useEffect } from 'react';
 
 const products = [
   { id: 1, name: "iGV" },
@@ -37,13 +36,15 @@ const App = () => {
   const [fullycovered, setFullycovered] = useState(null);
   const [showCalculations, setShowCalculations] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [formError, setFormError] = useState(""); // State to store form error
 
-  //const DELEGATE_FEE = 500; // Hardcoded delegate fee (USD)
-  const [ICDelegateFee, setICDelegateFee] = useState(500); // State for delegate fee
-  const [ICFlightFee, setICFlightFee] = useState(0); // State for flight fee
-  const [ICtotalCostPP, setICTotalCostPP] = useState(0); // State for total cost per person
-  const [ICtotalCost, setICTotalCost] = useState(0); // State for total cost
-  const [requiedProductCounts, setRequiedProductCounts] = useState([]); // State for required product count
+  const [ICDelegateFee, setICDelegateFee] = useState(500);
+  const [ICFlightFee, setICFlightFee] = useState(0);
+  const [ICtotalCostPP, setICTotalCostPP] = useState(0);
+  const [ICtotalCost, setICTotalCost] = useState(0);
+  const [requiedProductCounts, setRequiedProductCounts] = useState([]);
+
+  const calculationsRef = useRef(null);
 
   const entityOptions = entities.map((entity) => ({
     value: entity.id,
@@ -59,19 +60,20 @@ const App = () => {
   };
 
   const handleCalculate = async () => {
+    // Validate form fields
     if (
       !EntityId ||
       !selectedProducts.length ||
       delegates === 0 ||
       fullycovered === null
     ) {
-      alert("All fields required!");
+      setFormError("Warning! All fields required!");
       return;
     }
 
-    console.log(fullycovered);
+    // Clear error if validation passes
+    setFormError("");
 
-    // Call the calculateROI function with the selected values
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
       await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
 
@@ -81,6 +83,9 @@ const App = () => {
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
     setShowCalculations(true);
+
+    // Scroll to the calculations section
+    calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleProductToggle = (id) => {
@@ -95,16 +100,15 @@ const App = () => {
     <Router>
       <div className="home-page min-h-screen font-inter bg-gray-50 overflow-x-hidden">
         <Header />
-        <div className="flex items-start justify-center min-h-screen p-6 overflow-y-auto mt-7">
+        <div className="flex items-start justify-center min-h-screen p-6 -mt-12">
           <Routes>
             <Route
               path="/"
               element={
-                <div className="flex-1 overflow-y-auto max-w-screen-2xl px-2 sm:px-6 lg:px-8">
-                  {" "}
+                <div className="flex-1 max-w-screen-2xl px-2 sm:px-6 lg:px-8">
                   <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8">
-                    {/* Left: Form Section */}
-                    <div className="user-input bg-white p-8 rounded-xl shadow-lg lg:w-3/5 mx-10 min-h-[360px]">
+                    {/* Form Section */}
+                    <div className="user-input bg-white p-8 rounded-xl shadow-lg lg:w-3/5 mx-10 h-full flex flex-col justify-between">
                       <h2 className="text-3xl font-extrabold mb-6 text-gray-800 font-kalam text-center">
                         IC ROI CALCULATOR
                       </h2>
@@ -202,6 +206,12 @@ const App = () => {
                           </div>
                         </div>
                       </div>
+                      {/* Display Form Error */}
+                      {formError && (
+                        <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
+                          {formError}
+                        </div>
+                      )}
                       {selectedProducts.length > 1 && (
                         <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
                           Note: When multiple products are selected, the
@@ -220,8 +230,8 @@ const App = () => {
                       </div>
                     </div>
 
-                    {/* Right: Image Section */}
-                    <div className="md:w-2/5 flex items-center justify-center">
+                    {/* Image Section */}
+                    <div className="md:w-2/5 items-center h-full flex flex-col justify-between">
                       <div className="relative flex items-center h-full">
                         <img
                           src={IC_Visual}
@@ -236,19 +246,21 @@ const App = () => {
                       </div>
                     </div>
                   </div>
-                  {/* Registered Entities Section - Added below main content */}
+                  {/* Registered Entities Section */}
                   {showCalculations && (
-                    <Calculations
-                      calculations={{
-                        ICDelegateFee,
-                        ICFlightFee,
-                        ICtotalCostPP,
-                        ICtotalCost,
-                        requiedProductCounts,
-                        delegates,
-                      }}
-                      productCounts={requiedProductCounts}
-                    />
+                    <div ref={calculationsRef}>
+                      <Calculations
+                        calculations={{
+                          ICDelegateFee,
+                          ICFlightFee,
+                          ICtotalCostPP,
+                          ICtotalCost,
+                          requiedProductCounts,
+                          delegates,
+                        }}
+                        productCounts={requiedProductCounts}
+                      />
+                    </div>
                   )}
                   <div className="mt-24 text-center">
                     <h2 className="text-2xl font-bold font-figtree text-gray-800 mb-2">
