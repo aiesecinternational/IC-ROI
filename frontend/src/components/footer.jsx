@@ -9,7 +9,7 @@ return (
                 made by GID team with 💙
                 <a
                     href="/GIDTeam"
-                    className="text-blue-600 hover:underline ml-2"
+                    className="text-blue-600 hover:underline ml-2 font-hairline"
                 >
                     See more
                 </a>
