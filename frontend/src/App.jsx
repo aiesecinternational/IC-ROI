@@ -4,7 +4,8 @@ import React, { useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
-import entities from "./IR_List";
+
+import entities from "./components/IR_List.jsx";
 import Footer from "./components/footer";
 import RegisteredEntities from "./components/RegisteredEys";
 import GIDTeam from "./components/GIDTeam";
