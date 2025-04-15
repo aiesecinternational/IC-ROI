@@ -10,6 +10,9 @@ module.exports = {
         "variable-collection-black": "var(--variable-collection-black)",
         "variable-collection-blue": "var(--variable-collection-blue)",
         "variable-collection-teal": "var(--variable-collection-teal)",
+        "gv": "var(--color-gv)",
+        "gte": "var(--color-gte)",
+        "gta": "var(--color-gta)",
       },
       fontFamily:{
         kalam: ['Kalam', 'cursive'],

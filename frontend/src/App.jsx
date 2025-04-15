@@ -11,8 +11,10 @@ import Header from './components/Header';
 
 import IC_Visual  from './assets/IC_Visual.png';
 import Inside from './assets/Frame 366.png';
-import { roiCalculator } from './logic/roiCalculator';
+import roiCalculator from './logic/roiCalculator';
 //import { useEffect } from 'react';
+
+import Select from 'react-select';
 
 const products = [
   { id: 1, name: "iGV" },
@@ -36,12 +38,16 @@ const App = () => {
   const [ICtotalCost, setICTotalCost] = useState(0); // State for total cost
   const [requiedProductCounts, setRequiedProductCounts] = useState([]) // State for required product count
 
-  const handleEntityChange = (e) => {
-    const selectedEntity = entities.find(entity => entity.name === e.target.value);
-    if (selectedEntity) {
-      setEntityId(selectedEntity.id);  
+  const entityOptions = entities.map((entity) => ({
+    value: entity.id,
+    label: entity.name,
+  }));
+  
+  const handleEntityChange = (selectedOption) => {
+    if (selectedOption) {
+      setEntityId(selectedOption.value);
     } else {
-      setEntityId(0);  
+      setEntityId(0);
     }
   };
 
@@ -51,13 +57,14 @@ const App = () => {
       return;
     }
 
-    console.log(selectedProducts);
+    console.log(fullycovered);
 
     // Call the calculateROI function with the selected values
-    const { delegateFee, flightFee, totalCostpp, totalCost, productCounts} = await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
+    const { delegateFee, flightFee, totalCostPP, totalCost, productCounts} = await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
+    
     setICDelegateFee(delegateFee);
     setICFlightFee(flightFee);
-    setICTotalCostPP(totalCostpp);
+    setICTotalCostPP(totalCostPP);
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
     setShowCalculations(true);
@@ -89,22 +96,19 @@ const App = () => {
                     <div className="grid grid-cols-2 gap-4">
                       {/* Left Column: Entity and Delegate Fee Coverage */}
                       <div className="flex flex-col gap-2">
-                        <label htmlFor="entity" className="text-[#717171] text-lg font-medium ">
+                      <label htmlFor="entity" className="text-[#717171] text-lg font-medium">
                           Entity:
                         </label>
-                        <select
+                        <Select
                           id="entity"
-                          value={EntityId ? entities.find((e) => e.id === EntityId)?.name || "" : ""}
+                          options={entityOptions}
                           onChange={handleEntityChange}
-                          className="bg-white text-black border border-[#d0eaf4] rounded-lg p-2 shadow-md w-full focus:outline-none focus:ring-2 focus:ring-[#d0eaf4]"
-                        >
-                          <option value="">Select Entity</option>
-                          {entities.map((entity) => (
-                            <option key={entity.id} value={entity.name}>
-                              {entity.name}
-                            </option>
-                          ))}
-                        </select>
+                          placeholder="Select or type entity"
+                          className="w-full"
+                          classNamePrefix="react-select"
+                          isClearable
+                        />
+                        
                         <div className="mt-10">
                           <label htmlFor="coverage" className="text-[#717171] text-lg font-medium">
                             Coverage:
@@ -172,6 +176,11 @@ const App = () => {
                         </div>
                       </div>
                     </div>
+                    {selectedProducts.length > 1 && (
+                      <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
+                      Note: When multiple products are selected, the required number of approvals or realizations will be provided for each product independently to meet the overall target.
+                      </div>
+                    )}
                     <div className="col-span-2 flex justify-end mt-6">
                       <button
                         className="bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2"
@@ -201,7 +210,7 @@ const App = () => {
                 </div>
 
                 {/* Registered Entities Section - Added below main content */}
-                {showCalculations && <Calculations calculations={{ ICDelegateFee, ICFlightFee, ICtotalCostPP, ICtotalCost, requiedProductCounts, delegates }} />}
+                {showCalculations && <Calculations calculations={{ ICDelegateFee, ICFlightFee, ICtotalCostPP, ICtotalCost, requiedProductCounts, delegates }} productCounts={requiedProductCounts} />}
                 <div className="mt-24 text-center">
                   <h2 className="text-2xl font-bold font-figtree text-gray-800 mb-2">
                     GET YOUR IR GAME STARTED

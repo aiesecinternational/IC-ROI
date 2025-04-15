@@ -23,5 +23,8 @@ body {
   --variable-collection-black: rgba(82, 86, 94, 1);
   --variable-collection-blue: rgba(37, 99, 235, 1);
   --variable-collection-teal: rgba(12, 185, 193, 1);
+  --color-gv: #F85A3F;
+  --color-gte: #F48924;
+  --color-gta: #0CB9C1;
 }
 
