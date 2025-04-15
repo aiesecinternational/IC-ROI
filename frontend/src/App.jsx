@@ -2,6 +2,7 @@ import "./index.css";
 import "./tailwind.css";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Select from "react-select";
 
 import entities from "./IR_List";
 import Footer from "./components/footer";
@@ -9,13 +10,13 @@ import RegisteredEntities from "./components/RegisteredEys";
 import GIDTeam from "./components/GIDTeam";
 import Calculations from "./components/Calculations";
 import Header from "./components/Header";
+import roiCalculator from "./logic/roiCalculator.js";
+
 
 import IC_Visual  from './assets/IC_Visual.png';
 import Inside from './assets/Frame 366.png';
-import roiCalculator from './logic/roiCalculator';
+import FooterImage from './assets/Footer_image.png';
 //import { useEffect } from 'react';
-
-import Select from 'react-select';
 
 const products = [
   { id: 1, name: "iGV" },
