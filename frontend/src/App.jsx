@@ -282,12 +282,16 @@ const App = () => {
 
         {/* Footer Section */}
         <div className="relative">
-          <img
-            src={FooterImage}
-            alt="Footer Background"
-            className="absolute bottom-4 right-0 w-1/12 h-auto z-0"
-          />
-          <Footer className="relative z-10" />
+          <div className="relative z-10">
+            <Footer />
+          </div>
+          <div className="absolute inset-0 z-0">
+            <img
+              src={FooterImage}
+              alt="Footer Background"
+              className="absolute bottom-4 right-0 w-1/12 h-auto"
+            />
+          </div>
         </div>
       </div>
     </Router>
