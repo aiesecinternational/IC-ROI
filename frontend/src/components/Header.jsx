@@ -4,13 +4,13 @@ import Logo from '../assets/Logo.png';
 
 const Header = () => {
   return (
-    <div className="relative w-screen h-[180px] -mt-6 -ml-[24px] -mr-[28px]">
+    <div className="relative w-screen h-min-[180px] -mt-6 -ml-[24px] -mr-[28px]">
       {/* Background Image */}
       <div className="w-full h-full">
         <img 
           src={HeaderBeach} 
           alt="Beach Wave Background" 
-          className="w-[150%] h-[280px] object-cover object-top translate-y-6 translate-x-0"
+          className="w-[150%] h-[140px] md:h-[160px] lg:h-[180px] object-cover object-top translate-y-4 translate-x-0" 
         />
       </div>
       
@@ -21,7 +21,7 @@ const Header = () => {
           <img 
             src={Logo} 
             alt="AIESEC IC 2025 Logo" 
-            className="w-[340px] h-auto"
+            className="w-[360px] h-auto"
           />
         </div>
       </div>
