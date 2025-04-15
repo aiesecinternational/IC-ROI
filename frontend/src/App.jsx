@@ -1,13 +1,14 @@
-import './index.css';
-import './tailwind.css'
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import entities from './IR_List'
-import Footer from './components/footer';
-import RegisteredEntities from './components/RegisteredEys';
-import GIDTeam from './components/GIDTeam';
-import Calculations from './components/Calculations';
-import Header from './components/Header';
+import "./index.css";
+import "./tailwind.css";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import entities from "./IR_List";
+import Footer from "./components/footer";
+import RegisteredEntities from "./components/RegisteredEys";
+import GIDTeam from "./components/GIDTeam";
+import Calculations from "./components/Calculations";
+import Header from "./components/Header";
 
 import IC_Visual  from './assets/IC_Visual.png';
 import Inside from './assets/Frame 366.png';
@@ -25,10 +26,10 @@ const products = [
   { id: 6, name: "oGTe" },]
 
 const App = () => {
-  const [EntityId,setEntityId] = useState("");
-  const [delegates,setDelegates] = useState(0);
-  const [fullycovered,setFullycovered] = useState(null);
-  const [showCalculations,setShowCalculations] = useState(false);
+  const [EntityId, setEntityId] = useState("");
+  const [delegates, setDelegates] = useState(0);
+  const [fullycovered, setFullycovered] = useState(null);
+  const [showCalculations, setShowCalculations] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   // const DELEGATE_FEE = 500; // Hardcoded delegate fee (USD)
@@ -82,7 +83,7 @@ const App = () => {
     <Router>
       <div className="home-page min-h-screen font-inter bg-gray-50 overflow-x-hidden">
         <Header />
-        <div className="p-6">
+        <div className="flex items-start justify-center min-h-screen p-6 overflow-y-auto">
           <Routes>
             <Route path="/" element={
               <div className="flex-1 overflow-y-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
@@ -191,23 +192,22 @@ const App = () => {
                     </div>
                   </div>
 
-                  {/* Right: Image Section */}
-                  <div className="md:w-1/2 flex items-center justify-center">
-                    <div className="relative">
-                      <img
-                        src={IC_Visual}
-                        alt="IC Visual"
-                        className="w-full max-w-[500px] h-auto"
-                      />
-
-                      <img
-                        src={Inside}
-                        alt="Overlay Badge"
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12"
-                      />
+                    {/* Right: Image Section */}
+                    <div className="md:w-1/2 flex items-center justify-center">
+                      <div className="relative h-full flex items-center">
+                        <img
+                          src={IC_Visual}
+                          alt="IC Visual"
+                          className="w-full max-w-[400px] h-full object-contain"
+                        />
+                        <img
+                          src={Inside}
+                          alt="Overlay Badge"
+                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10/12"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
                 {/* Registered Entities Section - Added below main content */}
                 {showCalculations && <Calculations calculations={{ ICDelegateFee, ICFlightFee, ICtotalCostPP, ICtotalCost, requiedProductCounts, delegates }} productCounts={requiedProductCounts} />}
@@ -226,12 +226,18 @@ const App = () => {
           </Routes>
         </div>
 
-        {/* Footer */}
-        <Footer />
+        {/* Footer Section */}
+        <div className="relative">
+          <img
+            src={FooterImage}
+            alt="Footer Background"
+            className="fixed bottom-4 right-0 w-1/12 h-auto"
+          />
+          <Footer />
+        </div>
       </div>
     </Router>
   );
-}
+};
 
 export default App;
-

@@ -13,7 +13,7 @@
     url('./assets/bg.png') center/cover no-repeat fixed;
  
   background-image: url('./assets/bg.png');
-  background-position: center;
+  background-position: center 60%;
   background-size: cover;
   background-repeat: repeat;
   background-attachment: fixed; 
