@@ -32,7 +32,7 @@ const Calculations = ({calculations}) => {
         <span>£{calculations.ICtotalCost}</span>
       </div>
       <div className="bg-black text-white py-2 w-full font-bold text-center flex-grow-0">
-        Totale
+        Total
       </div>
     </div>
     </div>
