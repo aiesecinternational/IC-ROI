@@ -1,2 +1,6 @@
 .env 
 yarn.lock
+
+package-lock.json
+node_modules
+package 2.json

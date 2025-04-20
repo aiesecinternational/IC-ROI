@@ -202,8 +202,8 @@ const RegisteredEntities = () => {
     <div className="relative">
       {/* Wrapper for the content box */}
       <div className="relative">
-        <div className="bg-white rounded-xl shadow-md p-8 mb-32">
-          <div className="grid grid-cols-4 gap-8">
+        <div className="bg-white rounded-xl shadow-md p-8 mb-24">
+          <div className="grid grid-cols-4 gap-6">
             {regions.map((region, index) => (
               <div key={index} className="flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
@@ -225,9 +225,9 @@ const RegisteredEntities = () => {
                     {region.name}
                   </h3>
                 </div>
-                <div className="space-y-2 text-left">
+                <div className="space-y-1 text-left">
                   {region.countries.map((country, idx) => (
-                    <p key={idx} className="py-2 font-medium pl-14">
+                    <p key={idx} className="py-1 font-medium pl-14">
                       {country}
                     </p>
                   ))}
