@@ -14,22 +14,22 @@ const Calculations = ({calculations}) => {
       <ul className="mb-2">
         <li className="flex justify-between items-center text-sm">
           <span>✓ IC fees cost per person</span>
-          <span>{calculations.ICDelegateFee}£</span>
+          <span>{calculations.ICDelegateFee}$</span>
         </li>
         <li className="flex justify-between items-center text-sm">
           <span>✓ flight ticket cost per person</span>
-          <span>{calculations.ICFlightFee} £</span>
+          <span>{calculations.ICFlightFee} $</span>
         </li>
         <li className="flex justify-between items-center text-sm">
           <span>✓ Total cost covered per person</span>
-          <span>{calculations.ICtotalCostPP} £</span>
+          <span>{calculations.ICtotalCostPP} $</span>
         </li>
        
       </ul>
       <div className="border-t border-gray-300 my-2"></div>
       <div className="flex justify-between items-center font-bold mb-32 text-sm">
         <span>Total {calculations.ICtotalCostPP} × {calculations.delegates}</span>
-        <span>£{calculations.ICtotalCost}</span>
+        <span>${calculations.ICtotalCost}</span>
       </div>
       <div className="bg-black text-white py-2 w-full font-bold text-center flex-grow-0">
         Total
