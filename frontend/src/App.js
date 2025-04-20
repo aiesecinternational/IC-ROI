@@ -219,6 +219,14 @@ const App = () => {
                           </div>
                         </div>
                       </div>
+                      {selectedProducts.length > 1 && (
+                        <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
+                          Note: When multiple products are selected, the
+                          required number of approvals or realizations will be
+                          provided for each product independently to meet the
+                          overall target.
+                        </div>
+                      )}
                       <div className="col-span-2 flex justify-end mt-4">
                         <button
                           className="bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2"
