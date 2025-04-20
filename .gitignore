@@ -1,5 +1,6 @@
 .env 
 yarn.lock
+/ProductCost
 
 package-lock.json
 node_modules
