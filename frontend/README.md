@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment Variables
+
+Have set backend url as an env variable. Create a .env file in the root directory of frontend folder and put backend url like below. port should be 5001.
+
+```
+REACT_APP_BACKEND_URL = http://localhost:5001/graphql
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
