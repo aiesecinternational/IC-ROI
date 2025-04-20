@@ -1,7 +1,7 @@
 import { GET_COMMITTEE_QUERY } from "./graphqlQueries";
 
 export async function fetchData(EntityId) {
-    const response = await fetch('http://localhost:5000/graphql', {
+    const response = await fetch('http://localhost:5001/graphql', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -19,5 +19,5 @@ export async function fetchData(EntityId) {
     }
   
     return result.data.committee;
-  }
+}
   

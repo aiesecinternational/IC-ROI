@@ -108,6 +108,7 @@ const entities = [
     { id: '1536', name: 'Slovakia' },
     { id: '1587', name: 'Slovenia' },
     { id: '1545', name: 'South Africa' },
+    { id: '1562', name: 'South Korea' },
     { id: '1619', name: 'Spain' },
     { id: '1623', name: 'Sri Lanka' },
     { id: '2418', name: 'Swaziland' },
@@ -129,7 +130,7 @@ const entities = [
     { id: '1614', name: 'Uruguay' },
     { id: '2115', name: 'Uzbekistan' },
     { id: '1557', name: 'Venezuela' },
-    { id: '504', name: 'VIETNAM' },
+    { id: '504', name: 'Vietnam' },
     { id: '2122', name: 'Zambia' },
     { id: '2417', name: 'Zimbabwe' }
   ];

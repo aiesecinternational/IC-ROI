@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
-import entities from "./IR_List";
+import entities from "./components/IR_List.jsx";
 import Footer from "./components/footer";
 import RegisteredEntities from "./components/RegisteredEys";
 import GIDTeam from "./components/GIDTeam";
@@ -32,17 +32,17 @@ const coverageOptions = [
 
 const App = () => {
   const [EntityId, setEntityId] = useState("");
-  const [delegates, setDelegates] = useState(0);
+  const [delegates, setDelegates] = useState("");
   const [fullycovered, setFullycovered] = useState(null);
-  const [showCalculations, setShowCalculations] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [formError, setFormError] = useState(""); // State to store form error
+  const [errors, setErrors] = useState({}); // State to store field-specific errors
 
   const [ICDelegateFee, setICDelegateFee] = useState(500);
   const [ICFlightFee, setICFlightFee] = useState(0);
   const [ICtotalCostPP, setICTotalCostPP] = useState(0);
   const [ICtotalCost, setICTotalCost] = useState(0);
   const [requiedProductCounts, setRequiedProductCounts] = useState([]);
+  const [showCalculations, setShowCalculations] = useState(false);
 
   const calculationsRef = useRef(null);
 
@@ -51,28 +51,33 @@ const App = () => {
     label: entity.name,
   }));
 
-  const handleEntityChange = (selectedOption) => {
-    if (selectedOption) {
-      setEntityId(selectedOption.value);
-    } else {
-      setEntityId(0);
-    }
+  const handleProductToggle = (id) => {
+    setSelectedProducts((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((productId) => productId !== id)
+        : [...prevSelected, id]
+    );
   };
 
   const handleCalculate = async () => {
-    // Validate form fields
-    if (
-      !EntityId ||
-      !selectedProducts.length ||
-      delegates === 0 ||
-      fullycovered === null
-    ) {
-      setFormError("Warning! All fields required!");
-      return;
-    }
+    const newErrors = {};
 
-    // Clear error if validation passes
-    setFormError("");
+    // Validate each field and set errors
+    if (!EntityId) newErrors.entity = "Entity is required.";
+    if (!delegates || isNaN(delegates) || delegates <= 0)
+      newErrors.delegates = "Valid number of delegates is required.";
+    if (fullycovered === null)
+      newErrors.coverage = "Coverage selection is required.";
+    if (selectedProducts.length === 0)
+      newErrors.products = "At least one product must be selected.";
+
+    setErrors(newErrors);
+
+    // If there are errors, stop execution
+    if (Object.keys(newErrors).length > 0) return;
+
+    // Clear errors if validation passes
+    setErrors({});
 
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
       await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
@@ -88,19 +93,11 @@ const App = () => {
     calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleProductToggle = (id) => {
-    setSelectedProducts((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((productId) => productId !== id)
-        : [...prevSelected, id]
-    );
-  };
-
   return (
     <Router>
       <div className="home-page min-h-screen font-inter bg-gray-50 overflow-x-hidden">
         <Header />
-        <div className="flex items-start justify-center min-h-screen p-6 -mt-12">
+        <div className="flex items-start justify-center min-h-screen p-6 -mt-20">
           <Routes>
             <Route
               path="/"
@@ -124,12 +121,19 @@ const App = () => {
                           <Select
                             id="entity"
                             options={entityOptions}
-                            onChange={handleEntityChange}
+                            onChange={(selectedOption) =>
+                              setEntityId(selectedOption?.value || "")
+                            }
                             placeholder="Select or type entity"
                             className="w-full"
                             classNamePrefix="react-select"
                             isClearable
                           />
+                          {errors.entity && (
+                            <span className="text-sm text-red-500 mt-1">
+                              {errors.entity}
+                            </span>
+                          )}
 
                           <div className="mt-8">
                             <label
@@ -154,6 +158,11 @@ const App = () => {
                               classNamePrefix="react-select"
                               isClearable
                             />
+                            {errors.coverage && (
+                              <span className="text-sm text-red-500 mt-1">
+                                {errors.coverage}
+                              </span>
+                            )}
                           </div>
                         </div>
                         {/* Right Column: Delegate Count and Product */}
@@ -168,17 +177,16 @@ const App = () => {
                             id="delegates"
                             type="text"
                             value={delegates}
-                            onChange={(e) => {
-                              const value = e.target.value.replace(/\s/g, "");
-                              if (!isNaN(value) && value !== "") {
-                                setDelegates(parseInt(value, 10));
-                              } else {
-                                setDelegates(0);
-                              }
-                            }}
+                            onChange={(e) => setDelegates(e.target.value)}
                             placeholder="0"
                             className="w-full bg-white border border-[#d1d5db] rounded-md p-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#d0eaf4] focus:border-[#d0eaf4] transition duration-200"
                           />
+                          {errors.delegates && (
+                            <span className="text-sm text-red-500 mt-1">
+                              {errors.delegates}
+                            </span>
+                          )}
+
                           <div className="mt-8">
                             <label className="text-[#717171] text-lg font-medium">
                               Products:
@@ -203,15 +211,14 @@ const App = () => {
                                 </label>
                               ))}
                             </div>
+                            {errors.products && (
+                              <span className="text-sm text-red-500 mt-1">
+                                {errors.products}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>
-                      {/* Display Form Error */}
-                      {formError && (
-                        <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
-                          {formError}
-                        </div>
-                      )}
                       {selectedProducts.length > 1 && (
                         <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
                           Note: When multiple products are selected, the
@@ -281,12 +288,16 @@ const App = () => {
 
         {/* Footer Section */}
         <div className="relative">
-          <img
-            src={FooterImage}
-            alt="Footer Background"
-            className="absolute bottom-4 right-0 w-1/12 h-auto z-0"
-          />
-          <Footer className="relative z-10" />
+          <div className="relative z-10">
+            <Footer />
+          </div>
+          <div className="absolute inset-0 z-0">
+            <img
+              src={FooterImage}
+              alt="Footer Background"
+              className="absolute bottom-4 right-0 w-1/12 h-auto"
+            />
+          </div>
         </div>
       </div>
     </Router>
