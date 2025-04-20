@@ -36,7 +36,7 @@ const App = () => {
   const [fullycovered, setFullycovered] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState({});
-  const [mcpIncluded, setMcpIncluded] = useState(null);
+  // const [mcpIncluded, setMcpIncluded] = useState(null);
 
   const [ICDelegateFee, setICDelegateFee] = useState(500);
   const [ICFlightFee, setICFlightFee] = useState(0);
@@ -78,8 +78,8 @@ const App = () => {
       newErrors.coverage = "Coverage selection is required.";
     if (selectedProducts.length === 0)
       newErrors.products = "At least one product must be selected.";
-    if (mcpIncluded === null)
-      newErrors.mcpIncluded = "MCP inclusion selection is required.";
+    // if (mcpIncluded === null)
+    //   newErrors.mcpIncluded = "MCP inclusion selection is required.";
 
     setErrors(newErrors);
 
@@ -185,7 +185,7 @@ const App = () => {
                           </div>
 
                           {/* MCP Included Section */}
-                          <div className="mt-3">
+                          {/* <div className="mt-3">
                             {" "}
                             <label className="text-[#717171] text-lg font-medium">
                               MCP included:
@@ -215,7 +215,6 @@ const App = () => {
                             </div>
                             <div className="h-4">
                               {" "}
-                              {/* Reserved space for error */}
                               {errors.mcpIncluded && (
                                 <span className="text-xs text-red-500">
                                   {" "}
@@ -223,7 +222,7 @@ const App = () => {
                                 </span>
                               )}
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         {/* Right Column: Delegates and Products */}
                         <div className="flex flex-col gap-1">
