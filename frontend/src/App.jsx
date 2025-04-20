@@ -1,6 +1,6 @@
 import "./index.css";
 import "./tailwind.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react"; // Add useEffect import
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
@@ -60,6 +60,13 @@ const App = () => {
     );
   };
 
+  // Scroll to calculations when showCalculations becomes true
+  useEffect(() => {
+    if (showCalculations) {
+      calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [showCalculations]);
+
   const handleCalculate = async () => {
     const newErrors = {};
 
@@ -90,10 +97,7 @@ const App = () => {
     setICTotalCostPP(totalCostPP);
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
-    setShowCalculations(true);
-
-    // Scroll to the calculations section
-    calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+    setShowCalculations(true); // This will trigger the useEffect to scroll
   };
 
   return (
@@ -114,7 +118,6 @@ const App = () => {
                       </h2>
                       <div className="grid grid-cols-2 gap-2">
                         {" "}
-                        {/* Reduced gap */}
                         {/* Left Column: Entity and Coverage */}
                         <div className="flex flex-col gap-1">
                           <label
@@ -140,7 +143,6 @@ const App = () => {
                             {errors.entity && (
                               <span className="text-xs text-red-500">
                                 {" "}
-                                {/* Reduced font size */}
                                 {errors.entity}
                               </span>
                             )}
@@ -148,7 +150,6 @@ const App = () => {
 
                           <div className="mt-3">
                             {" "}
-                            {/* Reduced margin-top */}
                             <label
                               htmlFor="coverage"
                               className="text-[#717171] text-lg font-medium"
@@ -177,7 +178,6 @@ const App = () => {
                               {errors.coverage && (
                                 <span className="text-xs text-red-500">
                                   {" "}
-                                  {/* Reduced font size */}
                                   {errors.coverage}
                                 </span>
                               )}
@@ -187,13 +187,11 @@ const App = () => {
                           {/* MCP Included Section */}
                           <div className="mt-3">
                             {" "}
-                            {/* Reduced margin-top */}
                             <label className="text-[#717171] text-lg font-medium">
                               MCP included:
                             </label>
                             <div className="flex gap-3 mt-1">
                               {" "}
-                              {/* Reduced gap */}
                               <label className="flex items-center gap-1">
                                 <input
                                   type="radio"
@@ -221,7 +219,6 @@ const App = () => {
                               {errors.mcpIncluded && (
                                 <span className="text-xs text-red-500">
                                   {" "}
-                                  {/* Reduced font size */}
                                   {errors.mcpIncluded}
                                 </span>
                               )}
@@ -250,7 +247,6 @@ const App = () => {
                             {errors.delegates && (
                               <span className="text-xs text-red-500">
                                 {" "}
-                                {/* Reduced font size */}
                                 {errors.delegates}
                               </span>
                             )}
@@ -258,13 +254,11 @@ const App = () => {
 
                           <div className="mt-3">
                             {" "}
-                            {/* Reduced margin-top */}
                             <label className="text-[#717171] text-lg font-medium">
                               Products:
                             </label>
                             <div className="grid grid-cols-2 gap-y-1 gap-x-4 mt-1">
                               {" "}
-                              {/* Reduced gaps */}
                               {products.map((product) => (
                                 <label
                                   key={product.id}
@@ -290,7 +284,6 @@ const App = () => {
                               {errors.products && (
                                 <span className="text-xs text-red-500">
                                   {" "}
-                                  {/* Reduced font size */}
                                   {errors.products}
                                 </span>
                               )}
@@ -315,7 +308,6 @@ const App = () => {
                         </div>
                         <div className="flex justify-end mt-2">
                           {" "}
-                          {/* Reduced margin-top */}
                           <button
                             className="bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2"
                             onClick={handleCalculate}
