@@ -2,8 +2,6 @@ import React from 'react';
 import ProductCounts from './ProductCounts';
 
 const Calculations = ({calculations}) => {
-
-  console.log("Rendered Calculations with:", calculations.requiedProductCounts);
   
   return (
     <div className="flex flex-col lg:flex-row gap-4 justify-center items-start">
