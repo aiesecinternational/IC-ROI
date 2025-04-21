@@ -1,0 +1,72 @@
+/* Base styles */
+.home-page {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    overflow-x: hidden;
+  }
+  
+  /* Responsive utilities for fallback/custom handling */
+  @media (max-width: 1024px) {
+    .user-input {
+      margin: 1rem auto;
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .user-input {
+      padding: 1.5rem;
+    }
+  
+    .user-input h2 {
+      font-size: 1.75rem;
+    }
+  
+    .grid-cols-2 {
+      grid-template-columns: 1fr !important;
+    }
+  
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .user-input {
+      padding: 1rem;
+    }
+  
+    .user-input h2 {
+      font-size: 1.5rem;
+    }
+  
+    input[type="text"],
+    .react-select__control {
+      font-size: 0.875rem;
+    }
+  
+    .calculate-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    @media (max-aspect-ratio: 1) {
+        .responsive-top-offset {
+          margin-top: 4rem !important; /* You can increase this if needed */
+        }
+
+        .font-medium {
+            font-size: small;
+        }
+
+        .w-full {
+            font-size:x-small;
+        }
+
+        .note-text {
+            font-size: 2vw;
+        }
+      }
+  }
