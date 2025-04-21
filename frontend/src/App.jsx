@@ -1,15 +1,15 @@
 import "./index.css";
 import "./tailwind.css";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react"; // Add useEffect import
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
 import entities from "./components/IR_List.jsx";
-import Footer from "./components/footer";
-import RegisteredEntities from "./components/RegisteredEys";
-import GIDTeam from "./components/GIDTeam";
-import Calculations from "./components/Calculations";
-import Header from "./components/Header";
+import Footer from "./components/footer.jsx";
+import RegisteredEntities from "./components/RegisteredEys.jsx";
+import GIDTeam from "./components/GIDTeam.jsx";
+import Calculations from "./components/Calculations.jsx";
+import Header from "./components/Header.jsx";
 import roiCalculator from "./logic/roiCalculator.js";
 
 import IC_Visual from "./assets/IC_Visual.png";
@@ -35,7 +35,8 @@ const App = () => {
   const [delegates, setDelegates] = useState("");
   const [fullycovered, setFullycovered] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [errors, setErrors] = useState({}); // State to store field-specific errors
+  const [errors, setErrors] = useState({});
+  const [mcpIncluded, setMcpIncluded] = useState(null);
 
   const [ICDelegateFee, setICDelegateFee] = useState(500);
   const [ICFlightFee, setICFlightFee] = useState(0);
@@ -78,6 +79,8 @@ const App = () => {
       newErrors.coverage = "Coverage selection is required.";
     if (selectedProducts.length === 0)
       newErrors.products = "At least one product must be selected.";
+    if (mcpIncluded === null)
+      newErrors.mcpIncluded = "MCP inclusion selection is required.";
 
     setErrors(newErrors);
 
@@ -105,21 +108,22 @@ const App = () => {
     <Router>
       <div className="home-page min-h-screen font-inter bg-gray-50 overflow-x-hidden">
         <Header />
-        <div className="flex items-start justify-center min-h-screen p-6 -mt-20">
+        <div className="flex items-start justify-center min-h-screen p-6 -mt-16">
           <Routes>
             <Route
               path="/"
               element={
                 <div className="flex-1 max-w-screen-2xl px-2 sm:px-6 lg:px-8">
-                  <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8">
+                  <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8 -mt-8">
                     {/* Form Section */}
                     <div className="user-input bg-white p-8 rounded-xl shadow-lg lg:w-3/5 mx-10 h-full flex flex-col justify-between">
-                      <h2 className="text-3xl font-extrabold mb-6 text-gray-800 font-kalam text-center">
+                      <h2 className="text-3xl font-extrabold mb-2 text-gray-800 font-kalam text-center">
                         IC ROI CALCULATOR
                       </h2>
-                      <div className="grid grid-cols-2 gap-3">
-                        {/* Left Column: Entity and Delegate Fee Coverage */}
-                        <div className="flex flex-col gap-1.5">
+                      <div className="grid grid-cols-2 gap-2">
+                        {" "}
+                        {/* Left Column: Entity and Coverage */}
+                        <div className="flex flex-col gap-1">
                           <label
                             htmlFor="entity"
                             className="text-[#717171] text-lg font-medium"
@@ -137,13 +141,19 @@ const App = () => {
                             classNamePrefix="react-select"
                             isClearable
                           />
-                          {errors.entity && (
-                            <span className="text-sm text-red-500 mt-1">
-                              {errors.entity}
-                            </span>
-                          )}
+                          <div className="h-4">
+                            {" "}
+                            {/* Reserved space for error */}
+                            {errors.entity && (
+                              <span className="text-xs text-red-500">
+                                {" "}
+                                {errors.entity}
+                              </span>
+                            )}
+                          </div>
 
-                          <div className="mt-8">
+                          <div className="mt-3">
+                            {" "}
                             <label
                               htmlFor="coverage"
                               className="text-[#717171] text-lg font-medium"
@@ -166,15 +176,60 @@ const App = () => {
                               classNamePrefix="react-select"
                               isClearable
                             />
-                            {errors.coverage && (
-                              <span className="text-sm text-red-500 mt-1">
-                                {errors.coverage}
-                              </span>
-                            )}
+                            <div className="h-4">
+                              {" "}
+                              {/* Reserved space for error */}
+                              {errors.coverage && (
+                                <span className="text-xs text-red-500">
+                                  {" "}
+                                  {errors.coverage}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* MCP Included Section */}
+                          <div className="mt-3">
+                            {" "}
+                            <label className="text-[#717171] text-lg font-medium">
+                              MCP included:
+                            </label>
+                            <div className="flex gap-3 mt-1">
+                              {" "}
+                              <label className="flex items-center gap-1">
+                                <input
+                                  type="radio"
+                                  name="mcpIncluded"
+                                  value="yes"
+                                  onChange={() => setMcpIncluded(true)}
+                                  className="h-4 w-4 border-[#d0eaf4] text-[#f17424] focus:ring-[#d0eaf4]"
+                                />
+                                Yes
+                              </label>
+                              <label className="flex items-center gap-1">
+                                <input
+                                  type="radio"
+                                  name="mcpIncluded"
+                                  value="no"
+                                  onChange={() => setMcpIncluded(false)}
+                                  className="h-4 w-4 border-[#d0eaf4] text-[#f17424] focus:ring-[#d0eaf4]"
+                                />
+                                No
+                              </label>
+                            </div>
+                            <div className="h-4">
+                              {" "}
+                              {errors.mcpIncluded && (
+                                <span className="text-xs text-red-500">
+                                  {" "}
+                                  {errors.mcpIncluded}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
-                        {/* Right Column: Delegate Count and Product */}
-                        <div className="flex flex-col gap-1.5">
+                        {/* Right Column: Delegates and Products */}
+                        <div className="flex flex-col gap-1">
                           <label
                             htmlFor="delegates"
                             className="text-[#717171] text-lg font-medium"
@@ -189,21 +244,28 @@ const App = () => {
                             placeholder="0"
                             className="w-full bg-white border border-[#d1d5db] rounded-md p-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#d0eaf4] focus:border-[#d0eaf4] transition duration-200"
                           />
-                          {errors.delegates && (
-                            <span className="text-sm text-red-500 mt-1">
-                              {errors.delegates}
-                            </span>
-                          )}
+                          <div className="h-4">
+                            {" "}
+                            {/* Reserved space for error */}
+                            {errors.delegates && (
+                              <span className="text-xs text-red-500">
+                                {" "}
+                                {errors.delegates}
+                              </span>
+                            )}
+                          </div>
 
-                          <div className="mt-8">
+                          <div className="mt-3">
+                            {" "}
                             <label className="text-[#717171] text-lg font-medium">
                               Products:
                             </label>
-                            <div className="grid grid-cols-2 gap-y-1.5 gap-x-6 mt-2">
+                            <div className="grid grid-cols-2 gap-y-1 gap-x-4 mt-1">
+                              {" "}
                               {products.map((product) => (
                                 <label
                                   key={product.id}
-                                  className="flex items-center gap-1.5 text-[#717171] text-lg font-medium"
+                                  className="flex items-center gap-1 text-[#717171] text-lg font-medium"
                                 >
                                   <input
                                     type="checkbox"
@@ -219,37 +281,49 @@ const App = () => {
                                 </label>
                               ))}
                             </div>
-                            {errors.products && (
-                              <span className="text-sm text-red-500 mt-1">
-                                {errors.products}
-                              </span>
-                            )}
+                            <div className="h-4">
+                              {" "}
+                              {/* Reserved space for error */}
+                              {errors.products && (
+                                <span className="text-xs text-red-500">
+                                  {" "}
+                                  {errors.products}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                      
-                     
-                      <div className="col-span-3 flex justify-end mt-4 items-center">
-                      {selectedProducts.length > 1 && (
-                        <div className="col-span-2 text-xs text-[#f17424] font-medium items-start">
-                          Note: When multiple products are selected, the
-                          required number of approvals or realizations will be
-                          provided for each product independently to meet the
-                          overall target.
+
+                      {/* Warning and Calculate Button */}
+                      <div className="col-span-2">
+                        <div className="h-6">
+                          {" "}
+                          {/* Reserved space for warning */}
+                          {selectedProducts.length > 1 && (
+                            <div className="text-xs text-[#f17424] font-medium">
+                              Note: When multiple products are selected, the
+                              required number of approvals or realizations will
+                              be provided for each product independently to meet
+                              the overall target.
+                            </div>
+                          )}
                         </div>
-                      )}
-                        <button
-                          className=" col-span-1 bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2 h-12"
-                          onClick={handleCalculate}
-                        >
-                          Calculate
-                        </button>
+                        <div className="flex justify-end mt-2">
+                          {" "}
+                          <button
+                            className="bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2"
+                            onClick={handleCalculate}
+                          >
+                            Calculate
+                          </button>
+                        </div>
                       </div>
                     </div>
 
                     {/* Image Section */}
                     <div className="md:w-2/5 items-center h-full flex flex-col justify-between">
-                      <div className="relative flex items-center h-full">
+                      <div className="relative flex items-center h-full bg-white rounded-xl shadow-lg">
                         <img
                           src={IC_Visual}
                           alt="IC Visual"
@@ -279,11 +353,11 @@ const App = () => {
                       />
                     </div>
                   )}
-                  <div className="mt-24 text-center">
-                    <h2 className="text-2xl font-bold font-figtree text-gray-800 mb-2">
+                  <div className="mt-32 text-center">
+                    <h2 className="text-3xl font-bold font-figtree text-gray-800 mb-4">
                       GET YOUR IR GAME STARTED
                     </h2>
-                    <p className="text-gray-600 font-figtree mt-2 mb-4">
+                    <p className="text-lg text-gray-700 font-figtree mt-2 mb-6">
                       Check the list of the entities that have already
                       registered
                     </p>
