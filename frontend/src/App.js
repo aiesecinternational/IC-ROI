@@ -1,6 +1,6 @@
 import "./index.css";
 import "./tailwind.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
@@ -59,6 +59,14 @@ const App = () => {
     );
   };
 
+  useEffect(() => {
+    if (showCalculations) {
+      setTimeout(() => {
+        calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100)
+    }
+  }, [showCalculations])
+
   const handleCalculate = async () => {
     const newErrors = {};
 
@@ -79,6 +87,7 @@ const App = () => {
     // Clear errors if validation passes
     setErrors({});
 
+    setShowCalculations(false)
     setRequiedProductCounts([]); // Reset product counts before calculation
 
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
@@ -90,9 +99,6 @@ const App = () => {
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
     setShowCalculations(true);
-
-    // Scroll to the calculations section
-    calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
