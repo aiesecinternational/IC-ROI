@@ -60,12 +60,13 @@ const App = () => {
     );
   };
 
-
   useEffect(() => {
     if (showCalculations) {
-      calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100)
     }
-  }, [showCalculations]);
+  }, [showCalculations])
 
   const handleCalculate = async () => {
     const newErrors = {};
@@ -89,6 +90,9 @@ const App = () => {
     // Clear errors if validation passes
     setErrors({});
 
+    setShowCalculations(false)
+    setRequiedProductCounts([]); // Reset product counts before calculation
+
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
       await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
 
@@ -97,13 +101,7 @@ const App = () => {
     setICTotalCostPP(totalCostPP);
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
-
-    setShowCalculations(true); // Ensure calculations are shown
-
-    // Scroll to calculations section
-    setTimeout(() => {
-      calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 0); 
+    setShowCalculations(true);
   };
 
   return (
@@ -350,8 +348,8 @@ const App = () => {
                           ICtotalCost,
                           requiedProductCounts,
                           delegates,
+                          fullycovered,
                         }}
-                        productCounts={requiedProductCounts}
                       />
                     </div>
                   )}
