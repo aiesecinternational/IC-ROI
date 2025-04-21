@@ -4,12 +4,12 @@ import ProductCounts from './ProductCounts';
 const Calculations = ({calculations}) => {
   
   return (
-    <div className="flex flex-col lg:flex-row gap-4 justify-center items-center">
+    <div className="flex flex-col lg:flex-row gap-4 justify-center items-start">
       <div className="w-full lg:w-4/5 md:w-3/4">
         <ProductCounts productCounts={calculations.requiedProductCounts}/>
       </div>
     <div className="w-full lg:w-1/5 md:w-1/4">
-    <div className="bg-white border border-black rounded-lg p-4 shadow-lg w-72 ml-auto min-h-96 flex flex-col justify-between">
+    <div className="bg-white border border-black rounded-lg p-4 shadow-lg w-72 ml-auto min-h-96 flex flex-col justify-between mt-7">
     <div className='flex flex-col justify-start'>
       <h2 className="text-2xl font-bold mb-2">Receipt</h2>
       <ul className="mb-2">

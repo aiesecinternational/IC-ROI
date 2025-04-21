@@ -22,7 +22,6 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
         selectedProducts.forEach((productId) => {
             switch (productId) {
                 case 1:
-                    
                     calculation.productCounts.push({
                         id: 1,
                         name: 'iGV',

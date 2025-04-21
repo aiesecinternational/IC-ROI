@@ -79,6 +79,8 @@ const App = () => {
     // Clear errors if validation passes
     setErrors({});
 
+    setRequiedProductCounts([]); // Reset product counts before calculation
+
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
       await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
 
@@ -268,7 +270,6 @@ const App = () => {
                           delegates,
                           fullycovered,
                         }}
-                        productCounts={requiedProductCounts}
                       />
                     </div>
                   )}
