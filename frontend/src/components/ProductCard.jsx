@@ -35,7 +35,6 @@ const ProductCard = ({props}) => {
         <p className="text-black font-bold text-2xl mb-2">{props.name} {props.type === "OUTGOING"? "Approvals" : "Realizations"}</p>
       </div>
       <div>
-      <div className="text-[#797777] text-xs absolute bottom-4 left-4">30 × 47</div>
       <img
         src={logo}
         alt="Logo"
