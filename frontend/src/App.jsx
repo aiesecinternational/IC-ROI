@@ -1,5 +1,6 @@
 import "./index.css";
 import "./tailwind.css";
+import "./styles.css"
 import React, { useState, useRef, useEffect } from "react"; // Add useEffect import
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
@@ -114,7 +115,7 @@ const App = () => {
               path="/"
               element={
                 <div className="flex-1 max-w-screen-2xl px-2 sm:px-6 lg:px-8">
-                  <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8 -mt-8">
+                  <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8 -mt-8 responsive-top-offset">
                     {/* Form Section */}
                     <div className="user-input bg-white p-8 rounded-xl shadow-lg lg:w-3/5 mx-10 h-full flex flex-col justify-between">
                       <h2 className="text-3xl font-extrabold mb-2 text-gray-800 font-kalam text-center">
@@ -301,7 +302,7 @@ const App = () => {
                           {" "}
                           {/* Reserved space for warning */}
                           {selectedProducts.length > 1 && (
-                            <div className="text-xs text-[#f17424] font-medium">
+                            <div className="text-xs text-[#f17424] font-medium note-text">
                               Note: When multiple products are selected, the
                               required number of approvals or realizations will
                               be provided for each product independently to meet
@@ -353,7 +354,7 @@ const App = () => {
                       />
                     </div>
                   )}
-                  <div className="mt-32 text-center">
+                  <div className="mt-32 text-center md:block hidden">
                     <h2 className="text-3xl font-bold font-figtree text-gray-800 mb-4">
                       GET YOUR IR GAME STARTED
                     </h2>
