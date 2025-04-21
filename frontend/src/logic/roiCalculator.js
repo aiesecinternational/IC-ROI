@@ -22,61 +22,61 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
         selectedProducts.forEach((productId) => {
             switch (productId) {
                 case 1:
-                    data.iGV_Fee > 0 &&
+                    
                     calculation.productCounts.push({
                         id: 1,
                         name: 'iGV',
-                        count: Math.ceil(calculation.totalCost / data.iGV_Fee),
+                        count:data.iGV_Fee > 0 && Math.ceil(calculation.totalCost / data.iGV_Fee),
                         type: EXCHANGE_TYPE.INCOMING,
                         product: PRODUCT_TYPE.GV,
                         fee: data.iGV_Fee,
                     });
                     break;
                 case 2:
-                    data.iGTe_Fee > 0 && calculation.productCounts.push({
+                    calculation.productCounts.push({
                         id: 1,
                         name: 'iGTe',
-                        count: Math.ceil(calculation.totalCost / data.iGTe_Fee),
+                        count:data.iGTe_Fee > 0 &&  Math.ceil(calculation.totalCost / data.iGTe_Fee),
                         type: EXCHANGE_TYPE.INCOMING,
                         product: PRODUCT_TYPE.GTe,
                         fee: data.iGTe_Fee,
                     });
                     break;
                 case 3:
-                    data.oGV_Fee > 0 && calculation.productCounts.push({
+                    calculation.productCounts.push({
                         id: 1,
                         name: 'oGV',
-                        count: Math.ceil(calculation.totalCost / data.oGV_Fee),
+                        count: data.oGV_Fee > 0 &&  Math.ceil(calculation.totalCost / data.oGV_Fee),
                         type: EXCHANGE_TYPE.OUTGOING,
                         product: PRODUCT_TYPE.GV,
                         fee: data.oGV_Fee,
                     });
                     break;
                 case 4:
-                    data.iGTa_Fee > 0 && calculation.productCounts.push({
+                    calculation.productCounts.push({
                         id: 1,
                         name: 'iGTa',
-                        count: Math.ceil(calculation.totalCost / data.iGTa_Fee),
+                        count: data.iGTa_Fee > 0 && Math.ceil(calculation.totalCost / data.iGTa_Fee),
                         type: EXCHANGE_TYPE.INCOMING,
                         product: PRODUCT_TYPE.GTa,
                         fee: data.iGTa_Fee,
                     });
                     break;
                 case 5:
-                    data.oGTa_Fee > 0 && calculation.productCounts.push({
+                    calculation.productCounts.push({
                         id: 1,
                         name: 'oGTa',
-                        count: Math.ceil(calculation.totalCost / data.oGTa_Fee),
+                        count: data.oGTa_Fee > 0 &&  Math.ceil(calculation.totalCost / data.oGTa_Fee),
                         type: EXCHANGE_TYPE.OUTGOING,
                         product: PRODUCT_TYPE.GTa,
                         fee: data.oGTa_Fee,
                     });
                     break;
                 case 6: 
-                    data.oGTe_Fee > 0 && calculation.productCounts.push({
+                    calculation.productCounts.push({
                         id: 1,
                         name: 'oGTe',
-                        count: Math.ceil(calculation.totalCost / data.oGTe_Fee),
+                        count: data.oGTe_Fee > 0 &&  Math.ceil(calculation.totalCost / data.oGTe_Fee),
                         type: EXCHANGE_TYPE.OUTGOING,
                         product: PRODUCT_TYPE.GTe,
                         fee: data.oGTe_Fee,

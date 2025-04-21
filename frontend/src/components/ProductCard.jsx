@@ -31,7 +31,7 @@ const ProductCard = ({props}) => {
     >
       <p className="text-black text-xl mt-2 pt-2">You need</p>
       <div className='flex flex-col items-center justify-center'>
-        <p className="text-black font-extrabold text-4xl mb-2">{props.count}</p>
+        <p className="text-black font-extrabold text-6xl mb-2">{props.count? props.count : "N/A"}</p>
         <p className="text-black font-bold text-2xl mb-2">{props.name} {props.type === "OUTGOING"? "Approvals" : "Realizations"}</p>
       </div>
       <div>

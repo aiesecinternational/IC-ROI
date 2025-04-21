@@ -38,7 +38,7 @@ const Calculations = ({calculations}) => {
       </div>
       <div className="border-t border-gray-300 my-2"></div>
       <ul className="mb-2">
-      {calculations.requiedProductCounts.map((productCount) => (
+      {calculations.requiedProductCounts.map((productCount) => productCount.fee > 0 && (
         <li key={productCount.id} className="flex justify-between items-center text-sm">
           <span>✓ {productCount.name} Income</span>
           <span>$ {Number(productCount.fee).toFixed(2)} X {productCount.count}</span>
