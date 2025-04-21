@@ -1,6 +1,6 @@
 import "./index.css";
 import "./tailwind.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
@@ -59,6 +59,14 @@ const App = () => {
     );
   };
 
+  useEffect(() => {
+    if (showCalculations) {
+      setTimeout(() => {
+        calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100)
+    }
+  }, [showCalculations])
+
   const handleCalculate = async () => {
     const newErrors = {};
 
@@ -79,6 +87,9 @@ const App = () => {
     // Clear errors if validation passes
     setErrors({});
 
+    setShowCalculations(false)
+    setRequiedProductCounts([]); // Reset product counts before calculation
+
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
       await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
 
@@ -88,9 +99,6 @@ const App = () => {
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
     setShowCalculations(true);
-
-    // Scroll to the calculations section
-    calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -219,17 +227,19 @@ const App = () => {
                           </div>
                         </div>
                       </div>
+                      
+                     
+                      <div className="col-span-3 flex justify-end mt-4 items-center">
                       {selectedProducts.length > 1 && (
-                        <div className="col-span-2 text-sm text-[#f17424] font-medium mt-4">
+                        <div className="col-span-2 text-xs text-[#f17424] font-medium items-start">
                           Note: When multiple products are selected, the
                           required number of approvals or realizations will be
                           provided for each product independently to meet the
                           overall target.
                         </div>
                       )}
-                      <div className="col-span-2 flex justify-end mt-4">
                         <button
-                          className="bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2"
+                          className=" col-span-1 bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2 h-12"
                           onClick={handleCalculate}
                         >
                           Calculate
@@ -264,8 +274,8 @@ const App = () => {
                           ICtotalCost,
                           requiedProductCounts,
                           delegates,
+                          fullycovered,
                         }}
-                        productCounts={requiedProductCounts}
                       />
                     </div>
                   )}
