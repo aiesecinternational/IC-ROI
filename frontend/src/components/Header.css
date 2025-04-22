@@ -1,0 +1,15 @@
+@media (max-aspect-ratio: 1/1) {  
+    .responsive-header-bg {
+      object-position: center top;
+    }
+  
+    .responsive-header-logo {
+      width: 240px !important;
+    }
+  }
+  
+@media(min-aspect-ratio: 1) {
+    .responsive-header-logo {
+        width: max(300px, 26vw);
+    }
+}

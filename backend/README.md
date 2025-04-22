@@ -34,13 +34,20 @@ git clone https://github.com/AbdouGID/ic-roi.git
 cd backend
 npm install
 ```
-### 3. Start the Server
+### 3. Set Up Environment Variables
+Create a `.env` file in the `backend` directory with the following content:
+```
+FRONTEND_URL=http://localhost:3000
+```
+
+### 4. Start the Server
 ```bash
 npm run dev
 ```
-### 4. Access the GraphiQL Playground
+### 5. Access the GraphiQL Playground
 http://localhost:5000/graphql
-### 5. Query Delegate Fee Details
+
+### 6. Query Delegate Fee Details
 ```graphql
 {
   committee(id: 1) {

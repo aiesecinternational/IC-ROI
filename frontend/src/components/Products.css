@@ -1,0 +1,12 @@
+/* @media (max-aspect-ratio: 1/1) {
+    .aspect-responsive {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  } */
+
+@media (max-aspect-ratio: 1/1) {
+    .receipt-wrapper {
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }

@@ -12,7 +12,7 @@ const {
   GraphQLBoolean,
 } = require("graphql");
 
-const DELEGATE_FEE = 615;
+const DELEGATE_FEE = 638;
 const feesData = {};
 
 // Load CSV data
