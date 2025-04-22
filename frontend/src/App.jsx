@@ -37,7 +37,10 @@ const App = () => {
   const [fullycovered, setFullycovered] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState({});
-  // const [mcpIncluded, setMcpIncluded] = useState(null);
+
+  const [mcpIncluded, setMcpIncluded] = useState(null);
+  const [performanceBased, setPerformanceBased] = useState(false);
+
 
   const [ICDelegateFee, setICDelegateFee] = useState(500);
   const [ICFlightFee, setICFlightFee] = useState(0);
@@ -102,7 +105,13 @@ const App = () => {
     setICTotalCostPP(totalCostPP);
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
-    setShowCalculations(true);
+
+    setShowCalculations(true); // Ensure calculations are shown
+
+    // Scroll to calculations section
+    setTimeout(() => {
+      calculationsRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 0);
   };
 
   return (
@@ -117,17 +126,16 @@ const App = () => {
                 <div className="flex-1 max-w-screen-2xl px-2 sm:px-6 lg:px-8">
                   <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8 -mt-8 responsive-top-offset">
                     {/* Form Section */}
-                    <div className="user-input bg-white p-8 rounded-xl shadow-lg lg:w-3/5 mx-10 h-full flex flex-col justify-between">
-                      <h2 className="text-3xl font-extrabold mb-2 text-gray-800 font-kalam text-center">
+                    <div className="user-input bg-white p-6 rounded-xl shadow-lg lg:w-3/5 mx-10 h-full flex flex-col justify-between">
+                      <h2 className="text-3xl font-extrabold mb-4 text-gray-800 font-kalam text-center">
                         IC ROI CALCULATOR
                       </h2>
-                      <div className="grid grid-cols-2 gap-2">
-                        {" "}
+                      <div className="grid grid-cols-2 gap-4 -mt-4">
                         {/* Left Column: Entity and Coverage */}
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-2">
                           <label
                             htmlFor="entity"
-                            className="text-[#717171] text-lg font-medium"
+                            className="text-[#717171] text-base font-medium"
                           >
                             Entity:
                           </label>
@@ -143,21 +151,17 @@ const App = () => {
                             isClearable
                           />
                           <div className="h-4">
-                            {" "}
-                            {/* Reserved space for error */}
                             {errors.entity && (
                               <span className="text-xs text-red-500">
-                                {" "}
                                 {errors.entity}
                               </span>
                             )}
                           </div>
 
-                          <div className="mt-3">
-                            {" "}
+                          <div className="mt-2">
                             <label
                               htmlFor="coverage"
-                              className="text-[#717171] text-lg font-medium"
+                              className="text-[#717171] text-base font-medium"
                             >
                               Coverage:
                             </label>
@@ -178,11 +182,8 @@ const App = () => {
                               isClearable
                             />
                             <div className="h-4">
-                              {" "}
-                              {/* Reserved space for error */}
                               {errors.coverage && (
                                 <span className="text-xs text-red-500">
-                                  {" "}
                                   {errors.coverage}
                                 </span>
                               )}
@@ -190,13 +191,13 @@ const App = () => {
                           </div>
 
                           {/* MCP Included Section */}
-                          {/* <div className="mt-3">
-                            {" "}
-                            <label className="text-[#717171] text-lg font-medium">
+
+                          <div className="mt-2">
+                            <label className="text-[#717171] text-base font-medium">
+
                               MCP included:
                             </label>
                             <div className="flex gap-3 mt-1">
-                              {" "}
                               <label className="flex items-center gap-1">
                                 <input
                                   type="radio"
@@ -219,21 +220,20 @@ const App = () => {
                               </label>
                             </div>
                             <div className="h-4">
-                              {" "}
                               {errors.mcpIncluded && (
                                 <span className="text-xs text-red-500">
-                                  {" "}
                                   {errors.mcpIncluded}
                                 </span>
                               )}
                             </div>
                           </div> */}
                         </div>
-                        {/* Right Column: Delegates and Products */}
-                        <div className="flex flex-col gap-1">
+                        {/* Right Column: Delegates, Toggle, and Products */}
+                        <div className="flex flex-col gap-2">
+                          {/* Number of Delegates */}
                           <label
                             htmlFor="delegates"
-                            className="text-[#717171] text-lg font-medium"
+                            className="text-[#717171] text-base font-medium"
                           >
                             Number of Delegates
                           </label>
@@ -246,27 +246,44 @@ const App = () => {
                             className="w-full bg-white border border-[#d1d5db] rounded-md p-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-[#d0eaf4] focus:border-[#d0eaf4] transition duration-200"
                           />
                           <div className="h-4">
-                            {" "}
-                            {/* Reserved space for error */}
                             {errors.delegates && (
                               <span className="text-xs text-red-500">
-                                {" "}
                                 {errors.delegates}
                               </span>
                             )}
                           </div>
 
-                          <div className="mt-3">
-                            {" "}
-                            <label className="text-[#717171] text-lg font-medium">
+                          {/* Performance Based on Last Year's Performance */}
+                          <div className="mt-2 flex items-center justify-between">
+                            <label className="text-[#717171] text-base font-medium">
+                              Performance Based on Last Year's Performance
+                            </label>
+                            <div className="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+                              <input
+                                type="checkbox"
+                                id="performanceToggle"
+                                className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                                onChange={(e) =>
+                                  setPerformanceBased(e.target.checked)
+                                }
+                              />
+                              <label
+                                htmlFor="performanceToggle"
+                                className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
+                              ></label>
+                            </div>
+                          </div>
+
+                          {/* Products */}
+                          <div className="mt-2">
+                            <label className="text-[#717171] text-base font-medium">
                               Products:
                             </label>
-                            <div className="grid grid-cols-2 gap-y-1 gap-x-4 mt-1">
-                              {" "}
+                            <div className="grid grid-cols-2 gap-y-0.5 gap-x-4 mt-1">
                               {products.map((product) => (
                                 <label
                                   key={product.id}
-                                  className="flex items-center gap-1 text-[#717171] text-lg font-medium"
+                                  className="flex items-center gap-1 text-[#717171] text-base font-medium"
                                 >
                                   <input
                                     type="checkbox"
@@ -283,11 +300,8 @@ const App = () => {
                               ))}
                             </div>
                             <div className="h-4">
-                              {" "}
-                              {/* Reserved space for error */}
                               {errors.products && (
                                 <span className="text-xs text-red-500">
-                                  {" "}
                                   {errors.products}
                                 </span>
                               )}
@@ -299,19 +313,22 @@ const App = () => {
                       {/* Warning and Calculate Button */}
                       <div className="col-span-2">
                         <div className="h-6">
+
                           {" "}
                           {/* Reserved space for warning */}
-                          {selectedProducts.length > 1 && (
-                            <div className="text-xs text-[#f17424] font-medium note-text">
-                              Note: When multiple products are selected, the
-                              required number of approvals or realizations will
-                              be provided for each product independently to meet
-                              the overall target.
+                          {performanceBased ? (
+                            <div className="text-xs text-[#f17424] font-medium">
+                              The required number of approvals for each product selected is based on last year's performance.
                             </div>
+                          ) : (
+                            selectedProducts.length > 1 && (
+                              <div className="text-xs text-[#f17424] font-medium note-text">
+                                Note: When multiple products are selected, the required number of approvals or realizations will be provided for each product independently to meet the overall target.
+                              </div>
+                            )
                           )}
                         </div>
                         <div className="flex justify-end mt-2">
-                          {" "}
                           <button
                             className="bg-[#f17424] text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-[#e0631b] transition duration-200 focus:outline-none focus:ring-2 focus:ring-[#f17424] focus:ring-offset-2"
                             onClick={handleCalculate}
