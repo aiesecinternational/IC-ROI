@@ -1,5 +1,4 @@
-require("dotenv").config(); // Load .env variables
-console.log("AIESEC_TOKEN in schema.js:", process.env.AIESEC_TOKEN); // Debugging
+require("dotenv").config();
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const schema = require("./schema");
