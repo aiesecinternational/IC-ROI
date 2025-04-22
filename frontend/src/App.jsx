@@ -1,6 +1,6 @@
 import "./index.css";
 import "./tailwind.css";
-import React, { useState, useRef, useEffect } from "react"; // Add useEffect import
+import React, { useState, useRef, useEffect } from "react"; 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Select from "react-select";
 
@@ -121,13 +121,13 @@ const App = () => {
               path="/"
               element={
                 <div className="flex-1 max-w-screen-2xl px-2 sm:px-6 lg:px-8">
-                  <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8 -mt-8">
+                  <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8">
                     {/* Form Section */}
-                    <div className="user-input bg-white p-6 rounded-xl shadow-lg lg:w-3/5 mx-10 h-full flex flex-col justify-between">
+                    <div className="user-input bg-white pt-2 px-8 pb-6 rounded-xl shadow-lg lg:w-3/5 mx-6 h-full flex flex-col justify-between -mt-3"> 
                       <h2 className="text-3xl font-extrabold mb-4 text-gray-800 font-kalam text-center">
                         IC ROI CALCULATOR
                       </h2>
-                      <div className="grid grid-cols-2 gap-4 -mt-4">
+                      <div className="grid grid-cols-2 gap-6 -mt-4">
                         {/* Left Column: Entity and Coverage */}
                         <div className="flex flex-col gap-2">
                           <label
@@ -251,9 +251,9 @@ const App = () => {
                           {/* Performance Based on Last Year's Performance */}
                           <div className="mt-2 flex items-center justify-between">
                             <label className="text-[#717171] text-base font-medium">
-                              Performance Based on Last Year's Performance
+                              Calculations Based on Last Year's Performance
                             </label>
-                            <div className="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+                            <div className="relative inline-block w-14 align-middle select-none transition duration-200 ease-in">
                               <input
                                 type="checkbox"
                                 id="performanceToggle"
@@ -332,17 +332,17 @@ const App = () => {
                     </div>
 
                     {/* Image Section */}
-                    <div className="md:w-2/5 items-center h-full flex flex-col justify-between">
+                    <div className="md:w-2/5 items-center h-full flex flex-col justify-between -mt-3">
                       <div className="relative flex items-center h-full bg-white rounded-xl shadow-lg">
                         <img
                           src={IC_Visual}
                           alt="IC Visual"
-                          className="w-full h-full object-contain"
+                          className="w-[210%] h-[210%] object-contain"
                         />
                         <img
                           src={Inside}
                           alt="Overlay Badge"
-                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12"
+                          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110%]"
                         />
                       </div>
                     </div>
