@@ -3,7 +3,7 @@ import ProductCounts from './ProductCounts';
 import './Products.css'
 
 const Calculations = ({calculations}) => {
-  
+  // console.log(calculations);
   return (
     <div className="flex flex-col lg:flex-row gap-4 justify-center items-start">
       <div className="w-full lg:w-4/5 md:w-3/4">
@@ -18,6 +18,12 @@ const Calculations = ({calculations}) => {
           <span className="max-w-[80%]">✓ IC fees cost per person</span>
           <span>{calculations.ICDelegateFee}$</span>
         </li>
+        {calculations.mcpIncluded && (
+          <li className="flex justify-between items-center text-sm">
+          <span className="max-w-[80%]">✓ IC fees cost for MCP</span>
+          <span>{calculations.ICMcpFee}$</span>
+          </li>
+        )}
         {calculations.fullycovered && (
           <li className="flex justify-between items-center text-sm">
           <span  className="max-w-[80%]">✓ flight ticket cost per person</span>
@@ -25,16 +31,22 @@ const Calculations = ({calculations}) => {
         </li>
         )}
         <li className="flex justify-between items-center text-sm">
-          <span className="max-w-[80%]">✓ Total cost covered per person</span>
+          <span className="max-w-[80%]">✓ Total cost per normal delegate</span>
           <span>{calculations.ICtotalCostPP}$</span>
         </li>
+        {calculations.mcpIncluded && (
+          <li className="flex justify-between items-center text-sm">
+          <span className="max-w-[80%]">✓ Total cost for MCP</span>
+          <span>{calculations.ICMcpTotalCost}$</span>
+          </li>
+        )}
        
       </ul>
       <div className="border-t border-gray-300 my-2"></div>
 
       
       <div className="flex justify-between items-center font-bold  text-sm">
-        <span>Total {calculations.ICtotalCostPP} × {calculations.delegates}</span>
+        <span>Total {calculations.ICtotalCostPP} × {calculations.delegates} {calculations.mcpIncluded && ("+ " + calculations.ICMcpTotalCost)}</span>
         <span>${calculations.ICtotalCost}</span>
       </div>
       <div className="border-t border-gray-300 my-2"></div>

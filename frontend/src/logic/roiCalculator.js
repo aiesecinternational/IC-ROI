@@ -3,22 +3,26 @@ import { fetchData } from "./api";
 const EXCHANGE_TYPE = { "OUTGOING": "OUTGOING",  "INCOMING" : "INCOMING" };
 const PRODUCT_TYPE = { "GV": "GV", "GTe": "GTe", "GTa": "GTa" };
 
-export default async function roiCalculator(entityId, numOfDelegates, selectedProducts, fullyCovered) {
+export default async function roiCalculator(entityId, numOfDelegates, selectedProducts, fullyCovered, mcpIncluded) {
     const calculation = {
         delegateFee: 0,
         flightFee: 0,
         totalCostPP: 0,
         totalCost: 0,
-        productCounts: []
+        productCounts: [],
+        mcpFee: 0,
+        mcpTotalCost: 0
     };
 
    try {
     const data = await fetchData(Number(entityId));
     if (data) {
         calculation.delegateFee = data.delegate_fee;
+        calculation.mcpFee = data.mcp_fee? data.mcp_fee : Math.round(630 * 1.13);
         calculation.flightFee = data.flight_fee;
         calculation.totalCostPP = fullyCovered ? (data.delegate_fee + data.flight_fee) : data.delegate_fee;
-        calculation.totalCost = calculation.totalCostPP * numOfDelegates;
+        calculation.mcpTotalCost = fullyCovered ? (calculation.mcpFee + data.flight_fee) : calculation.mcpFee
+        calculation.totalCost = mcpIncluded ? calculation.totalCostPP * numOfDelegates + calculation.mcpTotalCost : calculation.totalCostPP * numOfDelegates;
         selectedProducts.forEach((productId) => {
             switch (productId) {
                 case 1:
@@ -33,7 +37,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
                     break;
                 case 2:
                     calculation.productCounts.push({
-                        id: 1,
+                        id: 2,
                         name: 'iGTe',
                         count:data.iGTe_Fee > 0 &&  Math.ceil(calculation.totalCost / data.iGTe_Fee),
                         type: EXCHANGE_TYPE.INCOMING,
@@ -43,7 +47,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
                     break;
                 case 3:
                     calculation.productCounts.push({
-                        id: 1,
+                        id: 3,
                         name: 'oGV',
                         count: data.oGV_Fee > 0 &&  Math.ceil(calculation.totalCost / data.oGV_Fee),
                         type: EXCHANGE_TYPE.OUTGOING,
@@ -53,7 +57,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
                     break;
                 case 4:
                     calculation.productCounts.push({
-                        id: 1,
+                        id: 4,
                         name: 'iGTa',
                         count: data.iGTa_Fee > 0 && Math.ceil(calculation.totalCost / data.iGTa_Fee),
                         type: EXCHANGE_TYPE.INCOMING,
@@ -63,7 +67,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
                     break;
                 case 5:
                     calculation.productCounts.push({
-                        id: 1,
+                        id: 5,
                         name: 'oGTa',
                         count: data.oGTa_Fee > 0 &&  Math.ceil(calculation.totalCost / data.oGTa_Fee),
                         type: EXCHANGE_TYPE.OUTGOING,
@@ -73,7 +77,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
                     break;
                 case 6: 
                     calculation.productCounts.push({
-                        id: 1,
+                        id: 6,
                         name: 'oGTe',
                         count: data.oGTe_Fee > 0 &&  Math.ceil(calculation.totalCost / data.oGTe_Fee),
                         type: EXCHANGE_TYPE.OUTGOING,

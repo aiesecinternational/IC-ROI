@@ -43,11 +43,13 @@ const App = () => {
 
 
   const [ICDelegateFee, setICDelegateFee] = useState(500);
+  const [ICMcpFee, setICMcpFee] = useState(Math.round(630 * 1.13));
   const [ICFlightFee, setICFlightFee] = useState(0);
   const [ICtotalCostPP, setICTotalCostPP] = useState(0);
   const [ICtotalCost, setICTotalCost] = useState(0);
   const [requiedProductCounts, setRequiedProductCounts] = useState([]);
   const [showCalculations, setShowCalculations] = useState(false);
+  const [ICMcpTotalCost, setICMcpTotalCost] = useState(0);
 
   const calculationsRef = useRef(null);
 
@@ -77,7 +79,7 @@ const App = () => {
 
     // Validate each field and set errors
     if (!EntityId) newErrors.entity = "Entity is required.";
-    if (!delegates || isNaN(delegates) || delegates <= 0)
+    if (!delegates || isNaN(delegates) || (delegates <= 0 && !mcpIncluded))
       newErrors.delegates = "Valid number of delegates is required.";
     if (fullycovered === null)
       newErrors.coverage = "Coverage selection is required.";
@@ -97,14 +99,16 @@ const App = () => {
     setShowCalculations(false)
     setRequiedProductCounts([]); // Reset product counts before calculation
 
-    const { delegateFee, flightFee, totalCostPP, totalCost, productCounts } =
-      await roiCalculator(EntityId, delegates, selectedProducts, fullycovered);
+    const { delegateFee, flightFee, totalCostPP, totalCost, productCounts, mcpFee, mcpTotalCost } =
+      await roiCalculator(EntityId, delegates, selectedProducts, fullycovered, mcpIncluded);
 
     setICDelegateFee(delegateFee);
     setICFlightFee(flightFee);
     setICTotalCostPP(totalCostPP);
     setICTotalCost(totalCost);
     setRequiedProductCounts(productCounts);
+    setICMcpFee(mcpFee);
+    setICMcpTotalCost(mcpTotalCost);
 
     setShowCalculations(true); // Ensure calculations are shown
 
@@ -192,12 +196,12 @@ const App = () => {
 
                           {/* MCP Included Section */}
 
-                          <div className="mt-2">
+                          <div className="mt-2 flex items-center gap-4">
                             <label className="text-[#717171] text-base font-medium">
 
-                              MCP included:
+                              Include MCP:
                             </label>
-                            <div className="flex gap-3 mt-1">
+                            <div className="flex gap-3">
                               <label className="flex items-center gap-1">
                                 <input
                                   type="radio"
@@ -226,7 +230,7 @@ const App = () => {
                                 </span>
                               )}
                             </div>
-                          </div> */}
+                          </div> 
                         </div>
                         {/* Right Column: Delegates, Toggle, and Products */}
                         <div className="flex flex-col gap-2">
@@ -311,14 +315,14 @@ const App = () => {
                       </div>
 
                       {/* Warning and Calculate Button */}
-                      <div className="col-span-2">
+                      <div className="flex w-full items-center justify-between">
                         <div className="h-6">
 
                           {" "}
                           {/* Reserved space for warning */}
                           {performanceBased ? (
-                            <div className="text-xs text-[#f17424] font-medium">
-                              The required number of approvals for each product selected is based on last year's performance.
+                            <div className="text-xs text-[#f17424] font-medium note-text">
+                              Note: When multiple products are selected, the required number of approvals for each product selected is based on last year's performance.
                             </div>
                           ) : (
                             selectedProducts.length > 1 && (
@@ -367,6 +371,9 @@ const App = () => {
                           requiedProductCounts,
                           delegates,
                           fullycovered,
+                          mcpIncluded,
+                          ICMcpFee,
+                          ICMcpTotalCost
                         }}
                       />
                     </div>
