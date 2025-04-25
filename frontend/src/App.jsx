@@ -15,6 +15,10 @@ import roiCalculator from "./logic/roiCalculator.js";
 import IC_Visual from "./assets/IC_Visual.png";
 import Inside from "./assets/Frame 366.png";
 import FooterImage from "./assets/Footer_image.png";
+import { GridLoader } from "react-spinners";
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const products = [
   { id: 1, name: "iGV" },
@@ -49,6 +53,7 @@ const App = () => {
   const [requiedProductCounts, setRequiedProductCounts] = useState([]);
   const [showCalculations, setShowCalculations] = useState(false);
   const [ICMcpTotalCost, setICMcpTotalCost] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const calculationsRef = useRef(null);
 
@@ -74,6 +79,7 @@ const App = () => {
   }, [showCalculations])
 
   const handleCalculate = async () => {
+    setIsLoading(true); // Start loading state
     const newErrors = {};
 
     // Validate each field and set errors
@@ -99,7 +105,7 @@ const App = () => {
     setRequiedProductCounts([]); // Reset product counts before calculation
 
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts, mcpFee, mcpTotalCost } =
-      await roiCalculator(EntityId, delegates, selectedProducts, fullycovered, mcpIncluded);
+      await roiCalculator(EntityId, delegates, selectedProducts, fullycovered, mcpIncluded, performanceBased);
 
     setICDelegateFee(delegateFee);
     setICFlightFee(flightFee);
@@ -108,7 +114,7 @@ const App = () => {
     setRequiedProductCounts(productCounts);
     setICMcpFee(mcpFee);
     setICMcpTotalCost(mcpTotalCost);
-
+    setIsLoading(false); // Stop loading state
     setShowCalculations(true); // Ensure calculations are shown
 
     // Scroll to calculations section
@@ -359,7 +365,11 @@ const App = () => {
                     </div>
                   </div>
                   {/* Registered Entities Section */}
-                  {showCalculations && (
+                  {isLoading? 
+                    <div className="flex justify-center items-center">
+                    <GridLoader color="#f17424" />
+                    </div>
+                  :showCalculations && (
                     <div ref={calculationsRef}>
                       <Calculations
                         calculations={{
@@ -408,6 +418,7 @@ const App = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Router>
   );
 };

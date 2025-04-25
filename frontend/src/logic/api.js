@@ -1,6 +1,6 @@
 import { GET_COMMITTEE_QUERY } from "./graphqlQueries";
 
-export async function fetchData(EntityId) {
+export async function fetchData(entityId, isPerformanceBased) {
     const response = await fetch(process.env.REACT_APP_BACKEND_URL, {
       method: 'POST',
       headers: {
@@ -8,7 +8,10 @@ export async function fetchData(EntityId) {
       },
       body: JSON.stringify({
         query: `${GET_COMMITTEE_QUERY}`,
-        variables: { id: EntityId },
+        variables: { 
+          id: entityId,
+          is_performance_base: isPerformanceBased,
+        },
       }),
     });
   
@@ -20,4 +23,5 @@ export async function fetchData(EntityId) {
   
     return result.data.committee;
 }
+
   
