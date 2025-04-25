@@ -123,7 +123,7 @@ const App = () => {
                 <div className="flex-1 max-w-screen-2xl px-2 sm:px-6 lg:px-8">
                   <div className="flex flex-col lg:flex-row gap-0 items-stretch mb-8">
                     {/* Form Section */}
-                    <div className="user-input bg-white pt-2 px-8 pb-6 rounded-xl shadow-lg lg:w-3/5 mx-6 h-full flex flex-col justify-between -mt-3"> 
+                    <div className="user-input bg-white pt-1 px-8 pb-6 rounded-xl shadow-lg lg:w-3/5 mx-6 h-full flex flex-col justify-between -mt-2"> 
                       <h2 className="text-3xl font-extrabold mb-4 text-gray-800 font-kalam text-center">
                         IC ROI CALCULATOR
                       </h2>
