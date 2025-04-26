@@ -33,7 +33,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
                     autoClose: false, // ⬅️ Keeps the toast visible
                     closeOnClick: true,
                     draggable: true,
-                    position: "bottom-right",
+                    position: "top-center",
                     style: { // vivid red
                         color: "#ff4d4f",
                         fontWeight: "bold",
@@ -125,35 +125,11 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
         });
         return calculation;
     } else {    
-        toast.error("No data found for the given entity ID.",  {
-            autoClose: false, // ⬅️ Keeps the toast visible
-            closeOnClick: true,
-            draggable: true,
-            position: "bottom-right",
-            style: { // vivid red
-                color: "#ff4d4f",
-                fontWeight: "bold",
-                fontSize: "16px",
-                border: "2px solid #ff4d4f",
-                borderRadius: "8px",
-            },
-          });
+        console.error("No data found for the given entity ID.");
     }
    } catch (error) {
-    toast.error("Error fetching committee data:",  {
-        autoClose: false, // ⬅️ Keeps the toast visible
-        closeOnClick: true,
-        draggable: true,
-        position: "bottom-right",
-        style: { // vivid red
-            color: "#ff4d4f",
-            fontWeight: "bold",
-            fontSize: "16px",
-            border: "2px solid #ff4d4f",
-            borderRadius: "8px",
-        },
-      });
-    return null;
+        console.error("Error fetching committee data:");
+        return null;
    }
    return calculation;
    

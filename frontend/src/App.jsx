@@ -36,7 +36,7 @@ const coverageOptions = [
 
 const App = () => {
   const [EntityId, setEntityId] = useState("");
-  const [delegates, setDelegates] = useState("");
+  const [delegates, setDelegates] = useState(0);
   const [fullycovered, setFullycovered] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [errors, setErrors] = useState({});
@@ -79,12 +79,12 @@ const App = () => {
   }, [showCalculations])
 
   const handleCalculate = async () => {
-    setIsLoading(true); // Start loading state
+    
     const newErrors = {};
 
     // Validate each field and set errors
     if (!EntityId) newErrors.entity = "Entity is required.";
-    if (!delegates || isNaN(delegates) || (delegates <= 0 && !mcpIncluded))
+    if ( (!mcpIncluded && delegates <= 0 ) || isNaN(delegates))
       newErrors.delegates = "Valid number of delegates is required.";
     if (fullycovered === null)
       newErrors.coverage = "Coverage selection is required.";
@@ -104,6 +104,8 @@ const App = () => {
     setShowCalculations(false)
     setRequiedProductCounts([]); // Reset product counts before calculation
 
+    setIsLoading(true); // Start loading state
+
     const { delegateFee, flightFee, totalCostPP, totalCost, productCounts, mcpFee, mcpTotalCost } =
       await roiCalculator(EntityId, delegates, selectedProducts, fullycovered, mcpIncluded, performanceBased);
 
@@ -114,6 +116,7 @@ const App = () => {
     setRequiedProductCounts(productCounts);
     setICMcpFee(mcpFee);
     setICMcpTotalCost(mcpTotalCost);
+
     setIsLoading(false); // Stop loading state
     setShowCalculations(true); // Ensure calculations are shown
 
@@ -146,7 +149,7 @@ const App = () => {
                             htmlFor="entity"
                             className="text-[#717171] text-base font-medium"
                           >
-                            Entity:
+                            Entity
                           </label>
                           <Select
                             id="entity"
@@ -157,6 +160,9 @@ const App = () => {
                             placeholder="Select or type entity"
                             className="w-full"
                             classNamePrefix="react-select"
+                            value={entityOptions.find(
+                              (option) => option.value === EntityId
+                            )}
                             isClearable
                           />
                           <div className="h-4">
@@ -172,7 +178,7 @@ const App = () => {
                               htmlFor="coverage"
                               className="text-[#717171] text-base font-medium"
                             >
-                              Coverage:
+                              Coverage
                             </label>
                             <Select
                               id="coverage"
@@ -241,11 +247,30 @@ const App = () => {
                         <div className="flex flex-col gap-2">
                           {/* Number of Delegates */}
                           <label
-                            htmlFor="delegates"
-                            className="text-[#717171] text-base font-medium"
-                          >
-                            Number of Delegates
-                          </label>
+                          htmlFor="delegates"
+                          className="text-[#717171] text-base font-medium flex items-center gap-1"
+                        >
+                          Number of Delegates
+                          <div className="relative group cursor-pointer">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4 text-[#717171] group-hover:text-black"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M12 20c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z"
+                              />
+                            </svg>
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 hidden group-hover:block bg-[#717171] text-white text-xs rounded px-2 py-1 z-10 whitespace-nowrap">
+                              Excluding MCP
+                            </div>
+                          </div>
+                        </label>
                           <input
                             id="delegates"
                             type="text"
@@ -326,12 +351,12 @@ const App = () => {
                           {" "}
                           {/* Reserved space for warning */}
                           {performanceBased ? (
-                            <div className="text-xs text-[#f17424] font-medium note-text">
+                            <div className="text-xs text-[#f17424] font-medium note-text mr-5">
                               Note: When multiple products are selected, the required number of approvals for each product selected is based on last year's performance.
                             </div>
                           ) : (
                             selectedProducts.length > 1 && (
-                              <div className="text-xs text-[#f17424] font-medium note-text">
+                              <div className="text-xs text-[#f17424] font-medium note-text mr-5">
                                 Note: When multiple products are selected, the required number of approvals or realizations will be provided for each product independently to meet the overall target.
                               </div>
                             )
