@@ -45,7 +45,7 @@ export default async function roiCalculator(entityId, numOfDelegates, selectedPr
             }
         }
         calculation.delegateFee = data.delegate_fee;
-        calculation.mcpFee = data.mcp_fee? data.mcp_fee : Math.round(630 * 1.13);
+        calculation.mcpFee = data.mcp_fee? data.mcp_fee : 630;
         calculation.flightFee = data.flight_fee;
         calculation.totalCostPP = fullyCovered ? (data.delegate_fee + data.flight_fee) : data.delegate_fee;
         calculation.mcpTotalCost = fullyCovered ? (calculation.mcpFee + data.flight_fee) : calculation.mcpFee
