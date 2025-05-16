@@ -141,3 +141,22 @@ select {
 .label{
   color: white !important;
 }
+
+/* Toggle Switch Styles */
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #037EF3;
+  background-color: white;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #037EF3;
+}
+
+.toggle-checkbox {
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-label {
+  transition: background-color 0.3s ease-in-out;
+}
