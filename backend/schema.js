@@ -12,7 +12,7 @@ const {
   GraphQLBoolean,
 } = require("graphql");
 
-const DELEGATE_FEE = 638;
+const DELEGATE_FEE = 560;
 const feesData = {};
 
 // Load CSV data
@@ -31,47 +31,18 @@ fs.createReadStream(path.join(__dirname, "fees.csv"))
         oGTa_Fee: parseFloat(row["OGTa Fee"]) || null,
         iGTe_Fee: parseFloat(row["iGTe Fee"]) || null,
         oGTe_Fee: parseFloat(row["OGTe Fee"]) || null,
+        iGV_Exchange: parseInt(row["iGV"]) || 0,
+        oGV_Exchange: parseInt(row["oGV"]) || 0,
+        iGTa_Exchange: parseInt(row["iGTa"]) || 0,
+        oGTa_Exchange: parseInt(row["oGTa"]) || 0,
+        iGTe_Exchange: parseInt(row["iGTe"]) || 0,
+        oGTe_Exchange: parseInt(row["oGTe"]) || 0,
       };
     }
   })
   .on("end", () => {
     console.log("✅ Welcome to AIESEC IC ROI Platform");
   });
-
-// Helper: Get analytics numbers
-async function fetchExchangeNumbers(mc_id) {
-  const access_token = process.env.AIESEC_ACCESS_TOKEN;
-  const today = new Date().toISOString().split("T")[0];
-  const lastYear = new Date();
-  lastYear.setFullYear(lastYear.getFullYear() - 1);
-  const start_date = lastYear.toISOString().split("T")[0];
-
-  const url = `https://analytics.api.aiesec.org/v2/applications/analyze?access_token=${access_token}&start_date=${start_date}&end_date=${today}&performance_v3[office_id]=${mc_id}`;
-
-  try {
-    const response = await axios.get(url);
-    const data = response.data;
-
-    return {
-      iGV_Exchange: data.i_realized_7?.doc_count || 0,
-      oGV_Exchange: data.o_approved_7?.doc_count || 0,
-      iGTa_Exchange: data.i_realized_8?.doc_count || 0,
-      oGTa_Exchange: data.o_approved_8?.doc_count || 0,
-      iGTe_Exchange: data.i_realized_9?.doc_count || 0,
-      oGTe_Exchange: data.o_approved_9?.doc_count || 0,
-    };
-  } catch (error) {
-    console.error("Analytics API error:", error.response?.data || error.message);
-    return {
-      iGV_Exchange: 0,
-      oGV_Exchange: 0,
-      iGTa_Exchange: 0,
-      oGTa_Exchange: 0,
-      iGTe_Exchange: 0,
-      oGTe_Exchange: 0,
-    };
-  }
-}
 
 // GraphQL Type
 const CommitteeType = new GraphQLObjectType({
@@ -111,12 +82,6 @@ const RootQuery = new GraphQLObjectType({
         if (!data) {
           throw new Error(`Committee with ID ${args.id} not found.`);
         }
-
-        if (args.is_performance_base) {
-          const exchangeData = await fetchExchangeNumbers(args.id);
-          return { ...data, ...exchangeData };
-        }
-
         return data;
       },
     },
